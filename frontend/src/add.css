@@ -1,0 +1,55 @@
+.paper {
+    width:fit-content;
+    height:fit-content;
+    position: relative;
+    float:right;
+    transform: rotate(5deg);
+  
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    color:black;
+    border: 10px solid black;
+  }
+  .paper form{
+    font-size: 5rem;
+    position: absolute;
+    z-index: 1;
+    top:50px;
+  }
+  .paper form textarea {
+    height:30vh;
+    width:30vw;
+    font-size: 3rem;
+    background-color: 0;
+    outline: none;
+    background: transparent;
+    border:none;
+    resize:none;
+    overflow: hidden;
+  }
+  .imagePlaceholder {
+    width:30vw;
+    height:50vh;
+    position: absolute;
+    top:0;
+    transform: rotate(-15deg);
+  }
+  .pencils {
+    width:30vw;
+    height:auto;
+    position:absolute;
+    bottom:0;
+    left:0;
+    margin-left: -65px;
+    margin-bottom: -50px;
+    transform: rotate(30deg);
+
+  }
+  #paperImage {
+    width:80vw;
+    height:50vh;
+    position: relative;
+  }
