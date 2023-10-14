@@ -1,9 +1,9 @@
 import { useState } from "react";
-import paper from "./images/paper.png"
-import imagePlaceholder from "./images/polaroid.png"
-import pencils from "./images/pencils.png"
+import paper from "../images/paper.png"
+import imagePlaceholder from "../images/polaroid.png"
+import pencils from "../images/pencils.png"
 import { motion, AnimatePresence  } from "framer-motion"
-import "./add.css"
+import "../style/add.css"
 
 export default function Add({visible}){
     const  [inputValue, setInputValue] =  useState('');
@@ -12,6 +12,8 @@ export default function Add({visible}){
 		setInputValue(event.target.value);
 	};
     console.log(inputValue);
+    console.log(window.outerHeight);
+    console.log(window.outerWidth);
     return(
         <AnimatePresence>
             {visible && < motion.div className="paper"
@@ -24,8 +26,8 @@ export default function Add({visible}){
                 y:800
             }}
             transition={{
-                duration: 0.5,
-                delay: 0.1,
+                duration: 0.6,
+                
             }}
             exit={{
                 y: 800
@@ -45,7 +47,7 @@ export default function Add({visible}){
                 y:700
             }}
             transition={{
-                duration: 0.5, 
+                duration: 0.6, 
             }}
             exit={{
                 y:700
@@ -58,7 +60,7 @@ export default function Add({visible}){
             }}
             initial={{y:300}}
             transition={{
-                duration: 0.5
+                duration: 0.6
             }}
             exit={{
                 y:300
