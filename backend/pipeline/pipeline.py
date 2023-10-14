@@ -24,7 +24,7 @@ def run_pipeline(user_msg):
         ]
     )
 
-    resp_prompt = response["choiresponse["choices"][0]["message"]["content"]ces"][0]["message"]["content"].replace("Stable-Diffusion prompt: ", "")
+    resp_prompt = response["choices"][0]["message"]["content"].replace("Stable-Diffusion prompt: ", "")
 
     stability_prompt = "nature, no humans, photo, paper texture, "
 
