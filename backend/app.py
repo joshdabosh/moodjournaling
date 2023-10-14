@@ -3,6 +3,7 @@ from flask_session import Session
 import psycopg2
 from argon2 import PasswordHasher
 from datetime import date, timedelta
+from pipeline.pipeline import run_pipeline
 
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
@@ -44,6 +45,8 @@ def new_entry():
     cur.execute("INSERT INTO entries (username, date, mood, entry) VALUES (%s, %s, %s, %s)",
                 (session.get("name"), date.today(), int(request.form['mood']), request.form['entry'],))
     print("successfully inserted ", session.get("name"), date.today(), int(request.form['mood']), request.form['entry'])
+    cur.execute("INSERT INTO entries (image) VALUES (%s)",
+                (run_pipeline(request.form['entry']),))
     return ""
 
 @app.post("/get_entry")
