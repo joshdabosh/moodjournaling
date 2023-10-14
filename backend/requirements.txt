@@ -1,0 +1,7 @@
+pillow
+argon2-cffi
+flask
+flask-session
+psycopg2
+openai
+stability_sdk
