@@ -80,4 +80,4 @@ def get_calendar():
         moods[(x[0] - first_day).days] = x
     return moods
 
-app.run("0.0.0.0", 5050)
+app.run("0.0.0.0", 5000)
