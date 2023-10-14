@@ -16,9 +16,9 @@ export default function App() {
 
     return (
         <div>
-            <Landing toggleAdd={toggleAdd}/>
+            <Landing toggleAdd={toggleAdd} toggleJournal={toggleJournal}/>
             <Add visible={add}/>
-            <Journal visible={journal} />
+            <Journal visible={journal} toggleVisible={toggleJournal} />
         </div>
     )
 }

@@ -16,7 +16,7 @@ export default function Add({visible}){
     console.log(window.outerWidth);
     return(
         <AnimatePresence>
-            {visible && < motion.div className="paper"
+            {visible && < motion.div className="addPaper"
             key="test" 
             animate={{
                 rotate: 6, 
@@ -27,7 +27,6 @@ export default function Add({visible}){
             }}
             transition={{
                 duration: 0.6,
-                
             }}
             exit={{
                 y: 800
@@ -58,7 +57,10 @@ export default function Add({visible}){
                 rotate:35,
                 y:0
             }}
-            initial={{y:300}}
+            initial={{
+                rotate:75,
+                y:300
+            }}
             transition={{
                 duration: 0.6
             }}

@@ -9,5 +9,12 @@
     width:20vw;
     position: absolute;
     bottom: 10vh;
-    right:0;
+    right:-5vw;
+}
+#journalPaper {
+    height:22vh;
+    width:20vw;
+    position: absolute;
+    bottom: 40vh;
+    right:-3vw;
 }

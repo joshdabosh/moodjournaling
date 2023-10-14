@@ -1,4 +1,4 @@
-.paper {
+.addPaper {
     width:fit-content;
     height:fit-content;
     position: relative;
@@ -12,13 +12,13 @@
     
     
   }
-  .paper form{
+  .addPaper form{
     font-size: 5rem;
     position: absolute;
     z-index: 1;
     top:50px;
   }
-  .paper form textarea {
+  .addPaper form textarea {
     height:30vh;
     width:30vw;
     font-size: 3rem;
