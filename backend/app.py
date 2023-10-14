@@ -24,40 +24,45 @@ def index():
 
 @app.post("/login")
 def login():
-    cur.execute("SELECT * FROM users WHERE username=%s", (request.form['username'],))
+    username = request.get_json()['username']
+    password = request.get_json()['password']
+    cur.execute("SELECT * FROM users WHERE username=%s", (username,))
     user = cur.fetchone()
-    print(user)
-    if (ph.verify(user[1], request.form['password'])):
-        print("success")
-        session["name"] = request.form['username']
-        print(session.get("name"))
+    if (ph.verify(user[1], password)):
+        session["name"] = username
     return ""
 
 @app.post("/register")
 def register():
+    username = request.get_json()['username']
+    password = request.get_json()['password']
     cur.execute("INSERT INTO users (username, password) VALUES (%s, %s)",
-                (request.form['username'], ph.hash(request.form['password'])))
+                (username, ph.hash(password)))
     cur.execute("SELECT * FROM users")
     return ""
 
 @app.post("/new_entry")
 def new_entry():
+    mood = int(request.get_json()['mood'])
+    entry = request.get_json()['entry']
     cur.execute("INSERT INTO entries (username, date, mood, entry) VALUES (%s, %s, %s, %s)",
-                (session.get("name"), date.today(), int(request.form['mood']), request.form['entry'],))
-    print("successfully inserted ", session.get("name"), date.today(), int(request.form['mood']), request.form['entry'])
+                (session.get("name"), date.today(), mood, entry,))
     cur.execute("INSERT INTO entries (image) VALUES (%s)",
-                (run_pipeline(request.form['entry']),))
+                (run_pipeline(entry),))
     return ""
 
 @app.post("/get_entry")
 def get_entry():
-    cur.execute("SELECT * FROM entries WHERE username=%s AND date=%s", (session.get("name"), request.form['date']))
+    date = request.get_json()['date']
+    cur.execute("SELECT * FROM entries WHERE username=%s AND date=%s", (session.get("name"), date))
     return cur.fetchone()
 
 
 @app.post("/get_calendar")
 def get_calendar():
-    today = date.today()
+    today = request.get_json()['date']
+    if not today:
+        today = date.today()
     this_month_first_day = today.replace(day=1)
     this_month_last_day = today.replace(day=1, month=this_month_first_day.month+1) - timedelta(days=1)
     print("DATES:", this_month_first_day, this_month_last_day)
