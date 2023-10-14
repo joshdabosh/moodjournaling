@@ -26,17 +26,51 @@
     
 }
 .page img {
+    position: absolute;
     width:420px;
     height: 550px;
+    z-index: 0;
 }
-.page {
-    
-    
+.left p{
+    position: absolute;
+    z-index: 1;
+    color:black;
+    bottom:50px;
+    left: 50px;
+    width:330px;
+    height:50px;
 }
 .left {
     margin-right: 15px;
 }
 .right {
-    
     margin-left: 15px;
+}
+.right p {
+    position: absolute;
+    z-index: 1;
+    color: black;
+    
+    bottom:65px;
+    left:40px;
+    width:175px;
+    height:150px;
+}
+.right .aiImage {
+    width:130px;
+    height:130px;
+    right:28px;
+    top:197px
+}
+.right .aiImage2{
+    width:130px;
+    height:130px;
+    right:97px;
+    top: 36px;
+}
+.left .aiImage {
+    width:200px;
+    height:200px;
+    left:48px;
+    top:40px;
 }
