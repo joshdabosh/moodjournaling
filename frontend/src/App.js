@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Add from "./Add";
 import Landing from "./Landing";
+import { motion, AnimatePresence  } from "framer-motion"
 
 export default function App() {
     const [add, setAdd] = useState(false);
@@ -10,7 +11,7 @@ export default function App() {
     return (
         <div>
             <Landing toggleAdd={toggleAdd}/>
-            { add && <Add />}
+            <Add visible={add}/>
         </div>
     )
 }
