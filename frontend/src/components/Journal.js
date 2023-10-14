@@ -1,4 +1,3 @@
-import journalImage from "../images/journal.png"
 import { motion, AnimatePresence  } from "framer-motion"
 import { forwardRef, useRef, useEffect } from "react";
 import HTMLFlipBook from 'react-pageflip';
