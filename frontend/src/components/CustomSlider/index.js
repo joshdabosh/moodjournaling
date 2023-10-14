@@ -16,6 +16,7 @@ const computeHexCode = (val) => {
     }
     return rgbToHex((val & 0xff0000) >> 16, (val & 0xff00) >> 8, (val & 0xff))
 }
+
 const CustomSlider = () => {
 
     const [sliderValue, setSliderValue] = useState(50);
