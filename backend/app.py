@@ -1,4 +1,4 @@
-from flask import Flask, request, session
+from flask import Flask, request, session, Response
 from flask_session import Session
 import psycopg2
 from argon2 import PasswordHasher
@@ -17,6 +17,16 @@ conn = psycopg2.connect(database = "eylwyufz",
 cur = conn.cursor()
 
 ph = PasswordHasher()
+
+@app.before_request
+def handle_preflight():
+    if request.method == "OPTIONS":
+        res = Response()
+        res.headers['X-Content-Type-Options'] = '*'
+        res.headers['Access-Control-Allow-Origin'] = '*'
+        res.headers['Access-Control-Allow-Headers'] = '*'
+        res.headers['Access-Control-Allow-Methods'] = '*'
+        return res
 
 @app.route("/")
 def index():
@@ -43,7 +53,7 @@ def register():
 
 @app.post("/new_entry")
 def new_entry():
-    mood = int(request.get_json()['mood'])
+    mood = request.get_json()['mood']
     entry = request.get_json()['entry']
     cur.execute("INSERT INTO entries (username, date, mood, entry) VALUES (%s, %s, %s, %s)",
                 (session.get("name"), date.today(), mood, entry,))
@@ -54,13 +64,18 @@ def new_entry():
 @app.post("/get_entry")
 def get_entry():
     date = request.get_json()['date']
-    cur.execute("SELECT * FROM entries WHERE username=%s AND date=%s", (session.get("name"), date))
-    return cur.fetchone()
+    cur.execute("SELECT date, mood, entry, picture FROM entries WHERE username=%s AND date=%s", (session.get("name"), date))
+    # print(cur.fetchone())
+    res = cur.fetchone()
+    if not res:
+        return ""
+    print(res)
+    return list(res)
 
 
 @app.post("/get_calendar")
 def get_calendar():
-    today = request.get_json()['date']
+    today = date.fromisoformat(request.get_json()['date'])
     if not today:
         today = date.today()
     this_month_first_day = today.replace(day=1)
