@@ -3,6 +3,8 @@ import { forwardRef, useRef, useEffect, useState } from "react";
 import HTMLFlipBook from 'react-pageflip';
 import left1 from "../images/left1.png"
 import right1 from "../images/right1.png"
+import left2 from "../images/left2.png"
+import right2 from "../images/right2.png"
 import background from "../images/journal.png"
 import tree from "../images/tree.jpg"
 
@@ -117,11 +119,11 @@ let objects = [
         image: tree
     }, 
     {
-        entry: "oooh ooh ah ah",
+        entry: "oooh ooh ah ahoooh ooh ah ahoooh ooh ah ahoooh ooh ah ahoooh ooh ah ahoooh ooh ah ahoooh ooh ah ahoooh ooh ah ahoooh ooh ah ahoooh ooh ah",
         image: tree
     },
     {
-        entry: "hehehe haw hehehe haw hehehe haw hehehe ahw",
+        entry: "hehehe haw hehehe haw hehehe haw hehehe ahw oooh ooh ah ahoooh ooh ah ahoooh ooh ah ahoooh ooh ah ahoooh ooh ah ah",
         image: tree
     },
     {
@@ -137,12 +139,18 @@ function makePages(objects){
     const pages = objects.map((object) => {
         var classname;
         var format;
-        if(counter % 2 == 0) {
-            classname = "page right"
+        if(counter % 4 == 0) {
+            classname = "page right right2"
+            format = right2
+         } else if(counter % 2 == 0) {
+            classname = "page right right1"
             format = right1
-        } else {
-            classname = "page left"
+        } else if(counter % 4 == 1)  {
+            classname = "page left left1"
             format = left1
+        } else {
+            classname = "page left left2"
+            format = left2
         }
         return (
             <Page 

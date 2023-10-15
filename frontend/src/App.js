@@ -33,7 +33,7 @@ export default function App() {
     function scrollToBottom(){
         for(let i = 0; i <= 500; i++) {
             setTimeout(()=>{
-                setScrollAmount(4000 + i * 10);
+                setScrollAmount(4000 +  102.82855943 * Math.pow(i, 1/1.6));
             }, i )
             
         }
@@ -44,7 +44,7 @@ export default function App() {
         }
         for(let i = 0; i <= 500; i++) {
             setTimeout(()=>{
-                setScrollAmount(9000 - i *10);
+                setScrollAmount(9000 - 102.82855943 * Math.pow(i, 1/1.6));
             }, i )
             
         }
