@@ -47,17 +47,19 @@ export default function App() {
             
         }
     }
-    
-    useEffect(() => {
-        fetch("http://localhost:5000/authcheck", {
+
+    const checkAuth = async () => {
+        const resp = await fetch("http://localhost:5000/authcheck", {
             credentials: 'include'
-        }).then(resp => {
-            if (resp.ok) {
-                setIsUserLoggedIn(true)
-                setAppState(1)
-            }
         })
-    }, [])
+
+        if (resp.ok) {
+            setIsUserLoggedIn(true)
+            setAppState(1)
+        }
+    }
+    
+    useEffect(() => {checkAuth()}, [])
 
     useEffect(() => {
         const handleScroll = (e) => {
@@ -79,7 +81,7 @@ export default function App() {
                 transformOrigin: "bottom",
                 height: "100vh"
             }}>
-                <Login visible={appState == 0} setAppState={setAppState}/>
+                <Login visible={appState == 0} setAppState={setAppState} setIsUserLoggedIn={setIsUserLoggedIn} />
                 <Landing visible={appState != 0} appState={appState} setAppState={setAppState} 
                     scrollToBottom={scrollToBottom} scrollToTop={scrollToTop}/>
                 <Add visible={appState == 2} setAppState={setAppState}/>

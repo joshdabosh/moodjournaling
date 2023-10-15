@@ -51,15 +51,17 @@ const Background = ({style, scrollAmount, authenticated}) => {
                     position: "absolute"
                 }}/>
 
-                <Calendar
-                    style={{
-                        position: "absolute",
-                        top: "50px",
-                        left: `calc((100% - (${computeWidth(scrollAmount)}px / 3)) / 2)`,
-                        width: `calc((${computeWidth(scrollAmount)}px) / 3)`
-                    }}
-                    calendarWidth={computeWidth(scrollAmount)/3}
-                />
+                {authenticated &&
+                    <Calendar
+                        style={{
+                            position: "absolute",
+                            top: "50px",
+                            left: `calc((100% - (${computeWidth(scrollAmount)}px / 3)) / 2)`,
+                            width: `calc((${computeWidth(scrollAmount)}px) / 3)`
+                        }}
+                        calendarWidth={computeWidth(scrollAmount)/3}
+                    />
+                }
             </div>
         </div>
     )
