@@ -182,12 +182,12 @@ const Page = forwardRef((props, ref) => {
         
         <p className="entry">{props.entry}</p>
         <img src= {`data:image/jpeg;base64,${props.image}`} className="aiImage"></img>
-        {props.className == "page right" && <img src={tree} className="aiImage2"/>}
+        {props.className == "page right right1" && <img src={`data:image/jpeg;base64,${props.image}`} className="aiImage2"/>}
       </div>
     );
   });
 
-// console.log(makePages(objects))
+// console.log(makePages(objects)) 
 function makePages(objects){
     var counter = 1;
     
