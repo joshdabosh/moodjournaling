@@ -81,7 +81,7 @@ export default function Add({visible}){
                 y: 800
             }}>
                 <form>
-                    <textarea  maxLength={10000} type="text"  value={inputValue} onChange={handleChange} />
+                    <textarea placeholder="Enter your feelings here" maxLength={220} type="text"  value={inputValue} onChange={handleChange} />
                 </form>
                     <img src={inputPaper} id="paperImage"/>
                     
