@@ -17,7 +17,8 @@ const computeDegrees = (amt) => {
 }
 
 export default function App() {
-    const [appState, setAppState] = useState(1); // 0 = login; 1 = landing; 2 = add; 3 = journal 
+    const [appState, setAppState] = useState(0) // 0 = login; 1 = landing; 2 = add; 3 = journal 
+    const [isUserLoggedIn, setIsUserLoggedIn] = useState(false)
     const [add, setAdd] = useState(false);
     const [journal, setJournal] = useState(false);
     const [scrollAmount, setScrollAmount] = useState(DEFAULT_SCROLL_AMT)
@@ -25,9 +26,21 @@ export default function App() {
     function toggleAdd() {
         setAdd(prev => !prev);
     }
+
     function toggleJournal(){
         setJournal(prev => !prev);
     }
+
+    useEffect(() => {
+        fetch("http://localhost:5000/authcheck", {
+            credentials: 'include'
+        }).then(resp => {
+            if (resp.ok) {
+                setIsUserLoggedIn(true)
+                setAppState(1)
+            }
+        })
+    }, [])
 
     useEffect(() => {
         const handleScroll = (e) => {
