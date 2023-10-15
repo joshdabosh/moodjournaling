@@ -10,6 +10,7 @@
     position: absolute;
     bottom: 10vh;
     right:-5vw;
+    z-index: 1;
 }
 #journalPaper {
     height:auto;
@@ -17,6 +18,14 @@
     position: absolute;
     bottom: 40vh;
     right:5vw;
+}
+#papers{
+    height:auto;
+    width:30vw;
+    position: absolute;
+    top: 8vh;
+    left:15vw;
+    z-index: -1;
 }
 #addPile{
     width:20vw;
