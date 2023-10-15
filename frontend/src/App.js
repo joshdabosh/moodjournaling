@@ -6,8 +6,6 @@ import Journal from "./components/Journal";
 
 import Login from './components/Login'
 
-import Calendar from './components/Calendar'
-
 import Background from './components/Background'
 
 const DEFAULT_SCROLL_AMT = 4000;
@@ -75,7 +73,7 @@ export default function App() {
       
     return (
         <div style={{backgroundColor:"#F4E7CF", width:"100vw", height:"100vh"}}>
-            <Background scrollAmount={scrollAmount}/>
+            <Background scrollAmount={scrollAmount} authenticated={isUserLoggedIn}/>
             <div style={{
                 transform: `perspective(100vh) rotateX(${computeDegrees(scrollAmount)}deg)`,
                 transformOrigin: "bottom",

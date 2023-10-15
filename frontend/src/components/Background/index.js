@@ -1,5 +1,5 @@
-import Wall from '../../images/wall.png'
 import BulletinBoard from '../../images/bulletinboard.png'
+import Calendar from '../Calendar'
 
 const computeTopDisplacement = (amt) => {
     return 20-(amt-4000)/10
@@ -17,7 +17,7 @@ const computeHeight = (amt) => {
     return 250 + (amt-4000)/12
 }
 
-const Background = ({style, scrollAmount}) => {
+const Background = ({style, scrollAmount, authenticated}) => {
     return (
         <div style={{...style}}>
             <div style={{
@@ -29,8 +29,14 @@ const Background = ({style, scrollAmount}) => {
             }}>
             </div>
 
-            <img
-                src={BulletinBoard}
+            {/* {authenticated &&
+                <Calendar style={{
+                    zIndex:1,
+                    left: `calc((100vw - 200px) / 2)`,
+                }}/>
+            } */}
+
+            <div
                 style={{
                     position: "absolute",
                     width: `${computeWidth(scrollAmount)}px`,
@@ -39,7 +45,22 @@ const Background = ({style, scrollAmount}) => {
                     transform: `perspective(500vh) rotateX(${computeDegrees(scrollAmount)}deg)`,
                     transformOrigin: "top",
                 }}
-            />
+            >
+                <img src={BulletinBoard} style={{
+                    width: "100%",
+                    position: "absolute"
+                }}/>
+
+                <Calendar
+                    style={{
+                        position: "absolute",
+                        top: "50px",
+                        left: `calc((100% - (${computeWidth(scrollAmount)}px / 3)) / 2)`,
+                        width: `calc((${computeWidth(scrollAmount)}px) / 3)`
+                    }}
+                    calendarWidth={computeWidth(scrollAmount)/3}
+                />
+            </div>
         </div>
     )
 }

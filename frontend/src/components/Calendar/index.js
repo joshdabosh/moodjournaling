@@ -22,14 +22,14 @@ const colorsList = ["#fff996",
 
 const SCRIBBLES = [Colored1, Colored2, Colored3, Colored4, Colored5, Colored6, Colored7, Colored8]
 
-const cellColors = [0, 1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6, 7]
+const cellColors = [0, 1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6, 7, 2, 3, 4, 5, 6, 7, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6, 7, 1]
 
-const Calendar = () => {    
+const Calendar = ({style, calendarWidth}) => {    
     return (
-        <div style={{"position":"absolute"}}>
-            <img src={BlankCalendar} style={{"position":"absolute", "height":"500px", "width":"465px"}}/>
+        <div style={{...style, position:"relative"}}>
+            <img src={BlankCalendar} style={{"position":"absolute", width:"100%"}}/>
             {cellColors.map((value, index) => (
-                <Cell src={SCRIBBLES[value]} key={index} index={index} />
+                <Cell src={SCRIBBLES[value]} key={index} index={index} calendarWidth={calendarWidth}/>
             ))}
         </div>
     )
