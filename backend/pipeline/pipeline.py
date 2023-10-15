@@ -7,8 +7,8 @@ from stability_sdk.client import generation
 
 openai.api_key = "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"
 
-# STABILITY_API_KEY = "sk-tFClvqHpTQZSoBs84X6p1mAZDHWoZTekVwjCA51IBB6ZpYoV"
-STABILITY_API_KEY = "sk-u1Tugp4RvL2i0FenDJbjWXmjY1Ncfi0dDQo2xtjNRwurSFjR"
+STABILITY_API_KEY = "sk-tFClvqHpTQZSoBs84X6p1mAZDHWoZTekVwjCA51IBB6ZpYoV"
+# STABILITY_API_KEY = "sk-u1Tugp4RvL2i0FenDJbjWXmjY1Ncfi0dDQo2xtjNRwurSFjR"
 
 system_msg = 'You are trying to generate scrapbook photos from a short journal entry. Generate a Stable-Diffusion prompt which is composed of phrases which describe the journal entry. Also include a couple phrases that are somewhat related to the sentiments expressed in the journal entry. When you encounter topics about humans, replace them with analogies in nature. Each phrase should be separated by a comma and a single space. Do not include anything that is outside of the prompt you are responding with. The journal entry is as follows: '
 
