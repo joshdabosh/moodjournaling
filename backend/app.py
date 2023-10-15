@@ -2,7 +2,7 @@ from flask import Flask, request, session, Response, jsonify
 from flask_session import Session
 import psycopg2
 from argon2 import PasswordHasher
-from datetime import date, timedelta
+from datetime import datetime, timedelta
 from pipeline.pipeline import run_pipeline
 
 from flask.sessions import SecureCookieSessionInterface
@@ -136,7 +136,7 @@ def get_calendar():
         response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
         return response, 403
     
-    today = date.fromisoformat(request.get_json()['date'])
+    today = datetime.fromisoformat(request.get_json()['date'])
     if not today:
         today = date.today()
     this_month_first_day = today.replace(day=1)
