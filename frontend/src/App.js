@@ -8,6 +8,8 @@ import Login from './components/Login'
 
 import Calendar from './components/Calendar'
 
+import Background from './components/Background'
+
 const DEFAULT_SCROLL_AMT = 4000;
 
 const computeDegrees = (amt) => {
@@ -40,18 +42,18 @@ export default function App() {
     }, [])
 
     return (
-        <>
-            <Calendar />
+        <div style={{backgroundColor:"#F4E7CF", width:"100vw", height:"100vh"}}>
+            <Background scrollAmount={scrollAmount}/>
             <div style={{
-                "transform": `perspective(100vh) rotateX(${computeDegrees(scrollAmount)}deg)`,
-                "transformOrigin": "bottom",
-                "height":"100vh"
+                transform: `perspective(100vh) rotateX(${computeDegrees(scrollAmount)}deg)`,
+                transformOrigin: "bottom",
+                height: "100vh"
             }}>
                 <Login visible={appState == 0} setAppState={setAppState}/>
                 <Landing visible={appState != 0} appState={appState} setAppState={setAppState}/>
                 <Add visible={appState == 2} setAppState={setAppState}/>
                 <Journal visible={appState == 3} setAppState={setAppState} />
             </div>
-        </>
+        </div>
     )
 }
