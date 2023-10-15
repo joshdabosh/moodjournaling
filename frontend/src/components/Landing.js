@@ -1,4 +1,4 @@
-import desk from "../images/desk.jpg"
+import desk from "../images/wood.png"
 import addPaper from "../images/addPaper.png"
 import "../style/landing.css"
 export default function Landing({toggleAdd, toggleJournal}) {
