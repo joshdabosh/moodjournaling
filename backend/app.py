@@ -4,6 +4,7 @@ import psycopg2
 from argon2 import PasswordHasher
 from datetime import datetime, timedelta
 from pipeline.pipeline import run_pipeline
+import base64
 
 from flask.sessions import SecureCookieSessionInterface
 
@@ -100,6 +101,15 @@ def new_entry():
     entry = request.get_json()['entry']
     cur.execute("INSERT INTO entries (username, date, mood, entry) VALUES (%s, %s, %s, %s)",
                 (session.get("name"), date.today(), mood, entry,))
+    print(date.today())
+    print(run_pipeline(entry))
+    cur.execute("""
+                UPDATE entries 
+                SET picture=%s
+                WHERE username=%s AND date=%s
+                """,
+                (run_pipeline(entry), session.get("name"), date.today()))
+    """
     try:
         cur.execute("INSERT INTO entries (image) VALUES (%s)",
                     (run_pipeline(entry),))
@@ -107,8 +117,11 @@ def new_entry():
         print("Failed to generate image")
         response = jsonify({"error": "failed to generate image"})
         response.headers.add('Access-Control-Allow-Origin', '*')
+        # cur.execute("ROLLBACK")
         return response, 404
+    """
     
+    # cur.commit()
     return {}
 
 @app.post("/get_entry")
@@ -119,14 +132,20 @@ def get_entry():
         return response, 403
 
     date = request.get_json()['date']
+    print(date)
     cur.execute("SELECT date, mood, entry, picture FROM entries WHERE username=%s AND date=%s", (session.get("name"), date))
     # print(cur.fetchone())
     res = cur.fetchone()
     if not res:
-        return ""
+        return {"result": "no entry found"}
     print(res)
+    reslist = list(res)
+    reslist[3] = reslist[3].tobytes()
+    reslist[3] = base64.b64encode(reslist[3]).decode("utf-8")
+    print(reslist)
 
-    return {"results":list(res)}
+
+    return {"result":reslist}
 
 
 @app.post("/get_calendar")

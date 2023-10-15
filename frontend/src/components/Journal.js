@@ -14,7 +14,7 @@ import "../style/journal.css"
 
 export default function Journal({visible, toggleVisible, setAppState}) {
     const getEntryForDate = async (date) => {
-        let response = await fetch("http://127.0.0.1:5000/get_entry", {
+        let response = await fetch("http://localhost:5000/get_entry", {
             method: "POST",
             mode: "cors",
             credentials: "include",
@@ -22,14 +22,56 @@ export default function Journal({visible, toggleVisible, setAppState}) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                date: new Date(currentDate).toISOString()
+                date: new Date(date).toISOString()
             })
         })
         let entry = await response.json()
         return entry
     }
     const [currentDate, setCurrentDate] = useState(Date.now())
-    const [entries, setEntries] = useState([])
+    let temp_objects = [];
+    const populate_temp_objects = async (objects) => {
+        // objects = []
+        for (let i = 0; i <= 50; i++) {
+            console.log(i)
+            let res = await getEntryForDate(Date.now() - 1000 * 60 * 60 * 24 * (50 - i))
+            console.log(res)
+            objects.push({
+                entry: res.result[2],
+                image: res.result[3]
+            })
+        }
+    }
+    useEffect(() => {
+        if (visible == false) {
+            populate_temp_objects(temp_objects)
+        }
+    }, [visible])
+    const [objects, setObjects] = useState(temp_objects
+        /*
+        [
+        {
+            entry: "I hate my life because my wife stole the kids and won the divorce settlement and killed my great grandma's husband",
+            image: tree
+        }, 
+        {
+            entry: "I hung out with friends today and had a good time",
+            image: tree
+        }, 
+        {
+            entry: "oooh ooh ah ah",
+            image: tree
+        },
+        {
+            entry: "hehehe haw hehehe haw hehehe haw hehehe ahw",
+            image: tree
+        },
+        {
+            entry:"The quick brown fox jumped over the lazy dog and decided to eat his own poo wow this is such a craazy story frong",
+            image: tree
+        }
+        ]*/
+    )
     const handleDateSwitch = async (direction) => {
         setCurrentDate(currentDate - 1000 * 60 * 60 * 24)
         /*
@@ -44,6 +86,8 @@ export default function Journal({visible, toggleVisible, setAppState}) {
         if (entries[0][1]) {}
         */
     }
+
+    let pageFlip = useRef();
     function useOutsideAlerter(ref) {
         useEffect(() => {
           /**
@@ -52,11 +96,10 @@ export default function Journal({visible, toggleVisible, setAppState}) {
           function handleClickOutside(event) {
             if (ref.current && ref.current.contains(event.target)) {
                 setAppState(1);
-                setCurrentDate(0)
+                // setCurrentDate(0)
             }
             else{
-                console.log(ref)
-                console.log(new Date(currentDate).toISOString())
+                // console.log(ref)
             }
           }
           // Bind the event listener
@@ -87,7 +130,42 @@ export default function Journal({visible, toggleVisible, setAppState}) {
                 y: 800
             }} >
                 <img ref={wrapperRef} src={background} id="bookBackground"></img>
-                <HTMLFlipBook className="book" width={420} height={550} drawShadow={false} flippingTime={700}>
+                <HTMLFlipBook
+                    ref={pageFlip}
+                    className="book"
+                    width={420}
+                    height={550}
+                    drawShadow={false} 
+                    flippingTime={700}
+                    startPage={objects.length-1}
+                    /*
+                    onFlip={
+                        async (e) => {
+                            let res = await getEntryForDate()
+                            console.log([{
+                                entry: res.result[2],
+                                image: tree
+                            }, ...objects])
+                            console.log(res.result[2])
+                            let newEntry = [{
+                                entry: res.result[2],
+                                image: res.result[3]
+                            }, ...objects]
+                            // setObjects(newEntry)
+
+                            let res2 = await getEntryForDate()
+                            console.log(res2.result[2])
+                            let newEntry2 = [{
+                                entry: res2.result[2],
+                                image: res2.result[3]
+                            }, ...newEntry]
+                            setObjects(newEntry2)
+                            // pageFlip.current.pageFlip().turnToPage(pageFlip.current.pageFlip().getCurrentPageIndex() + 1)
+                            // console.log(objects)
+                        }
+                    }
+                    */
+                >
                     {makePages(objects)}
                 </HTMLFlipBook>
             </motion.div>}
@@ -103,36 +181,13 @@ const Page = forwardRef((props, ref) => {
         <img className="journalBackground" src={props.format}></img>
         
         <p className="entry">{props.entry}</p>
-        <img src={tree} className="aiImage"></img>
+        <img src= {`data:image/jpeg;base64,${props.image}`} className="aiImage"></img>
         {props.className == "page right" && <img src={tree} className="aiImage2"/>}
       </div>
     );
   });
 
-let objects = [
-    {
-        entry: "I hate my life because my wife stole the kids and won the divorce settlement and killed my great grandma's husband",
-        image: tree
-    }, 
-    {
-        entry: "I hung out with friends today and had a good time",
-        image: tree
-    }, 
-    {
-        entry: "oooh ooh ah ahoooh ooh ah ahoooh ooh ah ahoooh ooh ah ahoooh ooh ah ahoooh ooh ah ahoooh ooh ah ahoooh ooh ah ahoooh ooh ah ahoooh ooh ah",
-        image: tree
-    },
-    {
-        entry: "hehehe haw hehehe haw hehehe haw hehehe ahw oooh ooh ah ahoooh ooh ah ahoooh ooh ah ahoooh ooh ah ahoooh ooh ah ah",
-        image: tree
-    },
-    {
-        entry:"The quick brown fox jumped over the lazy dog and decided to eat his own poo wow this is such a craazy story frong",
-        image: tree
-    }
-]
-console.log("pages")
-console.log(makePages(objects))
+// console.log(makePages(objects))
 function makePages(objects){
     var counter = 1;
     
@@ -157,7 +212,7 @@ function makePages(objects){
                 className={classname} 
                 number={counter++} 
                 format={format}
-                image={objects.image}
+                image={object.image}
                 entry={object.entry}
             ></Page>
         )
