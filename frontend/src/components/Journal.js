@@ -12,7 +12,7 @@ import "../style/journal.css"
 
 
 
-export default function Journal({visible, toggleVisible, setAppState}) {
+export default function Journal({visible, toggleVisible, setAppState, isUserLoggedIn}) {
     const getEntryForDate = async (date) => {
         let response = await fetch("http://localhost:5000/get_entry", {
             method: "POST",
@@ -43,7 +43,7 @@ export default function Journal({visible, toggleVisible, setAppState}) {
         }
     }
     useEffect(() => {
-        if (visible == false) {
+        if (visible == false && isUserLoggedIn == true) {
             populate_temp_objects(temp_objects)
         }
     }, [visible])
