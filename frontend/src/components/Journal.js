@@ -91,7 +91,7 @@ export default function Journal({visible, toggleVisible}) {
             </motion.div>}
         </AnimatePresence>
         <button onClick={() => console.log(currentDate)}> asdfasdf </button>
-        <button onClick={async () => console.log(getEntryForDate(new Date(currentDate).toISOString()))}> get </button>
+        <button onClick={async () => console.log(getEntryForDate())}> get </button>
        </> 
             
           

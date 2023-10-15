@@ -73,8 +73,14 @@ def new_entry():
     entry = request.get_json()['entry']
     cur.execute("INSERT INTO entries (username, date, mood, entry) VALUES (%s, %s, %s, %s)",
                 (session.get("name"), date.today(), mood, entry,))
-    cur.execute("INSERT INTO entries (image) VALUES (%s)",
-                (run_pipeline(entry),))
+    try:
+        cur.execute("INSERT INTO entries (image) VALUES (%s)",
+                    (run_pipeline(entry),))
+    except:
+        print("Failed to generate image")
+        response = jsonify({"error": "failed to generate image"})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response, 404
     
     response = jsonify({})
 
