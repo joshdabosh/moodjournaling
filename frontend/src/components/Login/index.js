@@ -3,15 +3,21 @@ import { useState } from "react"
 import "./index.css"
 
 const Login = () => {
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(formData);
-    }
-
     const [formData, setFormData] = useState({"username":"", "password":""})
 
     const handleChange = e => {
         setFormData({...formData, [e.target.name]: e.target.value})
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        await fetch("http://localhost:5000/register", {
+            method: "POST",
+            body: JSON.stringify(formData),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
     }
 
     return (
@@ -27,7 +33,7 @@ const Login = () => {
             </div>
 
             <button onClick={handleSubmit}>
-                Register
+                Enter
             </button>
         </form>
     )

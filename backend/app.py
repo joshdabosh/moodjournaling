@@ -54,6 +54,8 @@ def register():
     cur.execute("INSERT INTO users (username, password) VALUES (%s, %s)",
                 (username, ph.hash(password)))
     cur.execute("SELECT * FROM users")
+    
+    session["name"] = username
 
     response = jsonify({})
 
