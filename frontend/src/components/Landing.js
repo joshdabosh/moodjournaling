@@ -1,7 +1,7 @@
 import desk from "../images/wood.png"
 import addPaper from "../images/addPaper.png"
 import stack from "../images/stack.png"
-import journalAngle from "../images/journalcover.png"
+import journalAngle from "../images/journalangle3.png"
 import "../style/landing.css"
 import { motion, AnimatePresence } from "framer-motion"
 import { useEffect, useState } from "react"
@@ -50,7 +50,7 @@ export default function Landing({visible, appState, setAppState, scrollToBottom,
                 animate={{
                     y:0,
                     transition: { duration: 0.7},
-                    rotate: 10
+                    
                 }}
                 variants={list}
                 initial={{

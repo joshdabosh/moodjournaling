@@ -35,9 +35,12 @@ export default function App() {
         }
     }
     function scrollToTop(){
+        if(scrollAmount === DEFAULT_SCROLL_AMT) {
+            return;
+        }
         for(let i = 0; i <= 500; i++) {
             setTimeout(()=>{
-                setScrollAmount(9000 - i * 10);
+                setScrollAmount(9000 - i *10);
             }, i )
             
         }
