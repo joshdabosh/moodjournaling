@@ -20,7 +20,7 @@ import pencil8 from "../images/pencil8.png"
 import { motion, AnimatePresence  } from "framer-motion"
 import "../style/add.css"
 
-export default function Add({visible}){
+export default function Add({visible, setAppState}){
     const [inputValue, setInputValue] = useState('');
     // 1 = low, 8 = high
     const [moodValue, setMoodValue] = useState(0);
@@ -30,19 +30,21 @@ export default function Add({visible}){
 	};
     
     console.log(moodValue);
-    const submitEntry = (event) => {
-        fetch("http://127.0.0.1:5000/new_entry", {
-            method: "POST",
-            mode: "cors",
-            credentials: "include",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                mood: moodValue,
-                entry: inputValue
+    const submitEntry = () => {
+        if (moodValue != 0) {
+            fetch("http://localhost:5000/new_entry", {
+                method: "POST",
+                // mode: "cors",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    mood: moodValue,
+                    entry: inputValue
+                })
             })
-        })
+        }
     }
     console.log(inputValue);
     console.log(window.outerHeight);
@@ -155,6 +157,13 @@ export default function Add({visible}){
                 y:1000
             }}></motion.img>}
             {visible && <motion.img className="pen" src={pen} key="pencil"
+            onClick={
+                () => {
+                    submitEntry()
+                    setAppState(1)
+                    setInputValue("")
+                }
+            }
             animate={{
                 rotate:-0,
                 y:0,
