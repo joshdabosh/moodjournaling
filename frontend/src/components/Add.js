@@ -39,7 +39,6 @@ export default function Add({visible, setAppState}){
         }, 9 * 50)
         
     }
-    console.log(moodValue);
     const submitEntry = () => {
         if (moodValue != 0) {
             fetch("http://localhost:5000/new_entry", {
@@ -56,9 +55,6 @@ export default function Add({visible, setAppState}){
             })
         }
     }
-    console.log(inputValue);
-    console.log(window.outerHeight);
-    console.log(window.outerWidth);
 
     let pencilsImages =[pencil1, pencil2, pencil3, pencil4, pencil5, pencil6, pencil7, pencil8]
     let counter = 0;
