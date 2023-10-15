@@ -34,7 +34,7 @@ export default function Add({visible}){
         fetch("http://127.0.0.1:5000/new_entry", {
             method: "POST",
             mode: "cors",
-            credentials: "same-origin",
+            credentials: "include",
             headers: {
                 "Content-Type": "application/json",
             },
@@ -81,10 +81,10 @@ export default function Add({visible}){
                 y: 800
             }}>
                 <form>
-                    <textarea  maxLength={50} type="text"  value={inputValue} onChange={handleChange} />
+                    <textarea  maxLength={10000} type="text"  value={inputValue} onChange={handleChange} />
                 </form>
                     <img src={inputPaper} id="paperImage"/>
-                    <button onClick={submitEntry}> ky5 </button>
+                    
             </motion.div>}
             
             {visible && <motion.img className="directions" src={directions} key="test22"
@@ -103,20 +103,26 @@ export default function Add({visible}){
             }}
             />}
             {visible && <motion.img className="eraser" src={eraser} key="eraser"
+            onClick={()=> setInputValue("")}
             animate={{
                 rotate:-35,
-                y:0
+                y:0,
+                transition: { duration: 0.5},
             }}
             initial={{
                 rotate:75,
                 y:300
             }}
-            transition={{
-                duration: 0.6
-            }}
+            
             exit={{
                 y:300
-            }}></motion.img>}
+            }}
+            whileTap={{ scale: 0.9 }}
+            whileHover={{
+                scale:1.2,
+                transition: { duration: 0.2},
+            }}
+            ></motion.img>}
             {visible && <motion.img className="paperclip" src={paperclip} key="paperclip"
             animate={{
                 rotate:75,
@@ -151,15 +157,21 @@ export default function Add({visible}){
             {visible && <motion.img className="pen" src={pen} key="pencil"
             animate={{
                 rotate:-0,
-                y:0
+                y:0,
+                transition:{
+                    duration: 0.7
+                }
             }}
             initial={{
                 rotate:-20,
                 y:1000
             }}
-            transition={{
-                duration: 0.6
-            }}
+            whileHover={{
+                scale: 1.2,
+                transition: { duration: 0.2 },
+              }}
+              whileTap={{ scale: 0.9 }}
+            
             exit={{
                 y:1000
             }}></motion.img>}

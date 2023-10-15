@@ -13,6 +13,7 @@ const computeDegrees = (amt) => {
 }
 
 export default function App() {
+    const [appState, setAppState] = useState(1); // 0 = login; 1 = landing; 2 = add; 3 = journal 
     const [add, setAdd] = useState(false);
     const [journal, setJournal] = useState(false);
     const [scrollAmount, setScrollAmount] = useState(DEFAULT_SCROLL_AMT)
@@ -42,14 +43,10 @@ export default function App() {
             "transformOrigin": "bottom",
             "height":"100vh"
         }}>
-            {/* <Login /> */}
-            <Landing
-            toggleAdd={toggleAdd}
-            toggleJournal={toggleJournal}
-            />
-
-            <Add visible={add}/>
-            <Journal visible={journal} toggleVisible={toggleJournal} />
+            <Login visible={appState == 0} setAppState={setAppState}/>
+            <Landing visible={appState != 0} appState={appState} setAppState={setAppState}/>
+            <Add visible={appState == 2}/>
+            <Journal visible={appState == 3} setAppState={setAppState} />
         </div>
     )
 }
