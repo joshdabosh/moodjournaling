@@ -11,13 +11,15 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await fetch("http://localhost:5000/register", {
+        const resp = await fetch("http://localhost:5000/register", {
             method: "POST",
             body: JSON.stringify(formData),
             headers: {
                 "Content-Type": "application/json"
-            }
+            },
+            credentials: "include"
         })
+        
     }
 
     return (
