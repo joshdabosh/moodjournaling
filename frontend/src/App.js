@@ -42,7 +42,7 @@ export default function App() {
             "height":"100vh"
         }}>
             <Login visible={appState == 0} setAppState={setAppState}/>
-            <Landing visible={appState != 0} toggleAdd={toggleAdd} setAppState={setAppState}/>
+            <Landing visible={appState != 0} appState={appState} setAppState={setAppState}/>
             <Add visible={appState == 2}/>
             <Journal visible={appState == 3} setAppState={setAppState} />
         </div>
