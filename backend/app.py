@@ -1,4 +1,4 @@
-from flask import Flask, request, session
+from flask import Flask, request, session, Response, jsonify
 from flask_session import Session
 import psycopg2
 from argon2 import PasswordHasher
@@ -18,6 +18,16 @@ cur = conn.cursor()
 
 ph = PasswordHasher()
 
+@app.before_request
+def handle_preflight():
+    if request.method == "OPTIONS":
+        res = Response()
+        res.headers['X-Content-Type-Options'] = '*'
+        res.headers['Access-Control-Allow-Origin'] = '*'
+        res.headers['Access-Control-Allow-Headers'] = '*'
+        res.headers['Access-Control-Allow-Methods'] = '*'
+        return res
+
 @app.route("/")
 def index():
     return "app"
@@ -30,7 +40,12 @@ def login():
     user = cur.fetchone()
     if (ph.verify(user[1], password)):
         session["name"] = username
-    return ""
+        response = jsonify({"status":"ok"})
+    else:
+        response = jsonify({"status":"failed"})
+
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 @app.post("/register")
 def register():
@@ -39,28 +54,61 @@ def register():
     cur.execute("INSERT INTO users (username, password) VALUES (%s, %s)",
                 (username, ph.hash(password)))
     cur.execute("SELECT * FROM users")
-    return ""
+
+    response = jsonify({})
+
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 @app.post("/new_entry")
 def new_entry():
-    mood = int(request.get_json()['mood'])
+    if (session.get("name") == None):
+        response = jsonify({"error":"need to log in"})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response, 403
+
+    mood = request.get_json()['mood']
     entry = request.get_json()['entry']
     cur.execute("INSERT INTO entries (username, date, mood, entry) VALUES (%s, %s, %s, %s)",
                 (session.get("name"), date.today(), mood, entry,))
     cur.execute("INSERT INTO entries (image) VALUES (%s)",
                 (run_pipeline(entry),))
-    return ""
+    
+    response = jsonify({})
+
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 @app.post("/get_entry")
 def get_entry():
+    if (session.get("name") == None):
+        response = jsonify({"error":"need to log in"})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response, 403
+
     date = request.get_json()['date']
-    cur.execute("SELECT * FROM entries WHERE username=%s AND date=%s", (session.get("name"), date))
-    return cur.fetchone()
+    cur.execute("SELECT date, mood, entry, picture FROM entries WHERE username=%s AND date=%s", (session.get("name"), date))
+    # print(cur.fetchone())
+    res = cur.fetchone()
+    if not res:
+        return ""
+    print(res)
+
+    response = jsonify({"results":list(res)})
+
+    response.headers.add('Access-Control-Allow-Origin', '*')
+
+    return response
 
 
 @app.post("/get_calendar")
 def get_calendar():
-    today = request.get_json()['date']
+    if (session.get("name") == None):
+        response = jsonify({"error":"need to log in"})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response, 403
+    
+    today = date.fromisoformat(request.get_json()['date'])
     if not today:
         today = date.today()
     this_month_first_day = today.replace(day=1)
@@ -78,6 +126,11 @@ def get_calendar():
     for x in result:
         print((x[0] - first_day).days)
         moods[(x[0] - first_day).days] = x
-    return moods
+
+    response = jsonify({"results":moods})
+
+    response.headers.add('Access-Control-Allow-Origin', '*')
+
+    return response
 
 app.run("0.0.0.0", 5000)

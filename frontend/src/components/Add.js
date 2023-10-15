@@ -13,11 +13,29 @@ import { motion, AnimatePresence  } from "framer-motion"
 import "../style/add.css"
 
 export default function Add({visible}){
-    const  [inputValue, setInputValue] =  useState('');
+    const [inputValue, setInputValue] = useState('');
 
-	const  handleChange = (event) => {
+    // 1 = low, 8 = high
+    const [moodValue, setMoodValue] = useState(8);
+
+	const handleChange = (event) => {
 		setInputValue(event.target.value);
 	};
+
+    const submitEntry = (event) => {
+        fetch("http://127.0.0.1:5050/new_entry", {
+            method: "POST",
+            mode: "cors",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                mood: moodValue,
+                entry: inputValue
+            })
+        })
+    }
     console.log(inputValue);
     console.log(window.outerHeight);
     console.log(window.outerWidth);
@@ -41,6 +59,7 @@ export default function Add({visible}){
                     <textarea  maxLength={50} type="text"  value={inputValue} onChange={handleChange} />
                 </form>
                     <img src={inputPaper} id="paperImage"/>
+                    <button onClick={submitEntry}> ky5 </button>
             </motion.div>}
             
             {visible && <motion.img className="directions" src={directions} key="test22"
