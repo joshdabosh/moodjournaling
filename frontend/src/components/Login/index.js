@@ -2,7 +2,7 @@ import { useState } from "react"
 
 import "./index.css"
 
-const Login = () => {
+const Login = (props) => {
     const [formData, setFormData] = useState({"username":"", "password":""})
 
     const handleChange = e => {
@@ -19,6 +19,11 @@ const Login = () => {
             },
             credentials: "include"
         })
+
+        const login_result = await resp.json()
+        if (login_result.status = "login successful") {
+            props.setAppState(1)
+        }
         
     }
 
@@ -36,6 +41,8 @@ const Login = () => {
     }
 
     return (
+        <>
+        {props.visible &&
         <form style={{ width: "20em" }}>
             <div>
                 <label htmlFor="name">Username</label>
@@ -54,6 +61,8 @@ const Login = () => {
                 Register
             </button>
         </form>
+        }
+        </>
     )
 }
 
