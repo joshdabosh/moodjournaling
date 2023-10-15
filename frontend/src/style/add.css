@@ -17,9 +17,9 @@
   
 }
 .addPaper form textarea {
-  height:45vh;
+  height:35vh;
   width:40vw;
-  font-size: 6vh;
+  font-size: 6.4vh;
   background-color: 0;
   outline: none;
   background: transparent;
@@ -27,8 +27,9 @@
   resize:none;
   overflow: hidden;
   position: relative;
-  left:8vw;
-  top:4vw;
+  font-family: 'Just Another Hand', cursive;
+  left:8.5vw;
+  top:7vw;
 }
 .directions {
   width:30vw;
@@ -44,8 +45,8 @@
   position:absolute;
   bottom:0;
   left:0;
-  margin-left: 00px;
-  margin-bottom: -300px;
+  margin-left: 0vw;
+  margin-bottom: -47vh;
   transform: rotate(30deg);
   z-index: 1;
 }
@@ -53,7 +54,7 @@
   width: 10vw;
   height:auto;
   position:absolute;
-  bottom: -100px;
+  bottom: -15vh;
   right: 38vw;
 }
 .paperclip {
@@ -81,16 +82,16 @@
 .pen{
   position:absolute;
   width:10vw;
-  right:100px;
+  right:7vw;
   bottom:0;
 }
 .pencil {
-  margin: -3px;
+  margin: -0.2vw;
   width:3vw;
 }
 .pencilsWrapper{
   position:absolute;
   bottom: 0;
-  left:150px;
+  left:12vw;
   z-index: 0;
 }
