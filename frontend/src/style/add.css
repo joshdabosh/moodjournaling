@@ -1,54 +1,75 @@
 .addPaper {
-    width:fit-content;
-    height:fit-content;
-    position: relative;
-    float:right;
-    transform: rotate(5deg);
-  
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  .addPaper form{
-    font-size: 5rem;
-    position: absolute;
-    z-index: 1;
-    top:50px;
-  }
-  .addPaper form textarea {
-    height:30vh;
-    width:30vw;
-    font-size: 3rem;
-    background-color: 0;
-    outline: none;
-    background: transparent;
-    border:none;
-    resize:none;
-    overflow: hidden;
-  }
-  .directions {
-    width:30vw;
-    height:auto;
-    position: absolute;
-    top:0;
-    transform: rotate(-15deg);
-  }
-  .pencils {
-    width:30vw;
-    height:auto;
-    position:absolute;
-    bottom:0;
-    left:0;
-    margin-left: -65px;
-    margin-bottom: -50px;
-    transform: rotate(30deg);
+  width:fit-content;
+  height:fit-content;
+  position: relative;
+  float:right;
+  transform: rotate(5deg);
 
-  }
-  #paperImage {
-    margin-top: 20vh;
-    margin-right: 0vw;
-    width:60vw;
-    height:auto;
-    position: relative;
-  }
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.addPaper form{
+  font-size: 5rem;
+  position: absolute;
+  z-index: 1;
+  top:80px;
+}
+.addPaper form textarea {
+  height:30vh;
+  width:30vw;
+  font-size: 3rem;
+  background-color: 0;
+  outline: none;
+  background: transparent;
+  border:none;
+  resize:none;
+  overflow: hidden;
+}
+.directions {
+  width:30vw;
+  height:auto;
+  position: absolute;
+  top:-8vw;
+  right:45vw;
+  z-index: -1;
+}
+.pencilcase {
+  width:30vw;
+  height:auto;
+  position:absolute;
+  bottom:0;
+  left:0;
+  margin-left: 00px;
+  margin-bottom: -300px;
+  transform: rotate(30deg);
+}
+.eraser {
+  width: 10vw;
+  height:auto;
+  position:absolute;
+  bottom: -100px;
+  right: 38vw;
+}
+.paperclip {
+  width:2vw;
+  height: auto;
+  position:absolute;
+  top:10px;
+  right:30vw;
+}
+.paperclip2 {
+  width:2vw;
+  height: auto;
+  position: absolute;
+  top: 10px;
+  right: 30vw;
+}
+#paperImage {
+  margin-top: 25vh;
+  margin-right: 0vw;
+  width:50vw;
+  height:auto;
+  position: relative;
+}

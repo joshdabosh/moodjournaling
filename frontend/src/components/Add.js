@@ -7,6 +7,8 @@ import pen from "../images/pen.png"
 import eraser from "../images/eraser.png"
 import paperclip from "../images/paperclip.png"
 import inputPaper from "../images/inputpaper.png"
+import pencilcase from "../images/pencilcase.png"
+
 import { motion, AnimatePresence  } from "framer-motion"
 import "../style/add.css"
 
@@ -43,7 +45,7 @@ export default function Add({visible}){
             
             {visible && <motion.img className="directions" src={directions} key="test22"
             animate={{
-                rotate:-9, 
+                rotate:-20, 
                 y:0
             }}
             initial={{
@@ -56,7 +58,7 @@ export default function Add({visible}){
                 y:700
             }}
             />}
-            {visible && <motion.img className="pencils" src={pencils} key="test123"
+            {visible && <motion.img className="pencilcase" src={pencilcase} key="test123"
             animate={{
                 rotate:35,
                 y:0
@@ -71,6 +73,51 @@ export default function Add({visible}){
             exit={{
                 y:300
             }}/>}
+            {visible && <motion.img className="eraser" src={eraser} key="eraser"
+            animate={{
+                rotate:-35,
+                y:0
+            }}
+            initial={{
+                rotate:75,
+                y:300
+            }}
+            transition={{
+                duration: 0.6
+            }}
+            exit={{
+                y:300
+            }}></motion.img>}
+            {visible && <motion.img className="paperclip" src={paperclip} key="paperclip"
+            animate={{
+                rotate:75,
+                y:0
+            }}
+            initial={{
+                rotate:-360,
+                y:300
+            }}
+            transition={{
+                duration: 0.6
+            }}
+            exit={{
+                y:300
+            }}></motion.img>}
+            {visible && <motion.img className="paperclip" src={paperclip} key="paperclip2"
+            animate={{
+                rotate:35,
+                y:0
+            }}
+            initial={{
+                rotate:360,
+                y:300
+            }}
+            transition={{
+                duration: 0.6
+            }}
+            exit={{
+                y:300
+            }}></motion.img>}
         </AnimatePresence >
     )
 }
