@@ -6,6 +6,8 @@ import Journal from "./components/Journal";
 
 import Login from './components/Login'
 
+import Calendar from './components/Calendar'
+
 const DEFAULT_SCROLL_AMT = 4000;
 
 const computeDegrees = (amt) => {
@@ -38,15 +40,18 @@ export default function App() {
     }, [])
 
     return (
-        <div style={{
-            "transform": `perspective(100vh) rotateX(${computeDegrees(scrollAmount)}deg)`,
-            "transformOrigin": "bottom",
-            "height":"100vh"
-        }}>
-            <Login visible={appState == 0} setAppState={setAppState}/>
-            <Landing visible={appState != 0} appState={appState} setAppState={setAppState}/>
-            <Add visible={appState == 2} setAppState={setAppState}/>
-            <Journal visible={appState == 3} setAppState={setAppState} />
-        </div>
+        <>
+            <Calendar />
+            <div style={{
+                "transform": `perspective(100vh) rotateX(${computeDegrees(scrollAmount)}deg)`,
+                "transformOrigin": "bottom",
+                "height":"100vh"
+            }}>
+                <Login visible={appState == 0} setAppState={setAppState}/>
+                <Landing visible={appState != 0} appState={appState} setAppState={setAppState}/>
+                <Add visible={appState == 2} setAppState={setAppState}/>
+                <Journal visible={appState == 3} setAppState={setAppState} />
+            </div>
+        </>
     )
 }
