@@ -57,19 +57,27 @@ def login():
     password = request.get_json()['password']
     cur.execute("SELECT * FROM users WHERE username=%s", (username,))
     user = cur.fetchone()
-    if (ph.verify(user[1], password)):
-        session["name"] = username
-        return {"status": "ok"}
+    if not user:
+        return jsonify({"status": "user does not exist"}), 401
+    try:
+        ph.verify(user[1], password)
+    except:
+        return jsonify({"status": "password incorrect"}), 401
     else:
-        return {"status": "failed"}
+        session["name"] = username
+        return {"status": "login successful"}
 
 @app.post("/register")
 def register():
     username = request.get_json()['username']
     password = request.get_json()['password']
+    cur.execute("SELECT * FROM users WHERE username=%s", (username,))
+    existing_user = cur.fetchone()
+    if (existing_user):
+        return jsonify({"error": "user already exists"}), 400
+
     cur.execute("INSERT INTO users (username, password) VALUES (%s, %s)",
                 (username, ph.hash(password)))
-    cur.execute("SELECT * FROM users")
     
     session["name"] = username
 
