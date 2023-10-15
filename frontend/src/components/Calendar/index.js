@@ -1,3 +1,5 @@
+import React, { useState, useEffect } from "react"
+
 import Cell from "./Cell"
 import BlankCalendar from "../../images/calendar.png"
 
@@ -22,15 +24,40 @@ const colorsList = ["#fff996",
 
 const SCRIBBLES = [Colored1, Colored2, Colored3, Colored4, Colored5, Colored6, Colored7, Colored8]
 
-const cellColors = [0, 1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6, 7, 2, 3, 4, 5, 6, 7, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6, 7, 1]
+const Calendar = ({style, calendarWidth}) => {
+    const [calendarData, setCalendarData] = useState([])
 
-const Calendar = ({style, calendarWidth}) => {    
+    const fetchCalendarData = async () => {
+        const {results} = await fetch("http://localhost:5000/get_calendar", {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                date: new Date().toISOString().replace(/\.\d{3}Z$/gm, '')
+            })
+        }).then(e => e.json())
+
+        setCalendarData(results)
+    }
+
+    useEffect(() => {
+        fetchCalendarData()
+    }, [])
+    
     return (
         <div style={{...style, position:"relative"}}>
             <img src={BlankCalendar} style={{"position":"absolute", width:"100%"}}/>
-            {cellColors.map((value, index) => (
-                <Cell src={SCRIBBLES[value]} key={index} index={index} calendarWidth={calendarWidth}/>
-            ))}
+            {calendarData.map((value, index) => {
+                return (
+                    <React.Fragment key={index}>
+                        {value && 
+                            <Cell src={SCRIBBLES[value]} index={index} calendarWidth={calendarWidth}/>
+                        }
+                    </React.Fragment>
+                )
+            })}
         </div>
     )
 }
