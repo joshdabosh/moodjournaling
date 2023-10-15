@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Add from "./components/Add";
 import Landing from "./components/Landing";
 import { motion, AnimatePresence  } from "framer-motion"
@@ -30,7 +30,23 @@ export default function App() {
     function toggleJournal(){
         setJournal(prev => !prev);
     }
-
+    function scrollToBottom(){
+        for(let i = 0; i <= 500; i++) {
+            setTimeout(()=>{
+                setScrollAmount(4000 + i * 10);
+            }, i )
+            
+        }
+    }
+    function scrollToTop(){
+        for(let i = 0; i <= 500; i++) {
+            setTimeout(()=>{
+                setScrollAmount(9000 - i * 10);
+            }, i )
+            
+        }
+    }
+    
     useEffect(() => {
         fetch("http://localhost:5000/authcheck", {
             credentials: 'include'
@@ -48,12 +64,12 @@ export default function App() {
         }
 
         window.addEventListener('wheel', handleScroll)
-        
         return () => {
             window.removeEventListener('wheel', handleScroll)
         }
+        
     }, [])
-
+      
     return (
         <div style={{backgroundColor:"#F4E7CF", width:"100vw", height:"100vh"}}>
             <Background scrollAmount={scrollAmount}/>
@@ -63,7 +79,8 @@ export default function App() {
                 height: "100vh"
             }}>
                 <Login visible={appState == 0} setAppState={setAppState}/>
-                <Landing visible={appState != 0} appState={appState} setAppState={setAppState}/>
+                <Landing visible={appState != 0} appState={appState} setAppState={setAppState} 
+                    scrollToBottom={scrollToBottom} scrollToTop={scrollToTop}/>
                 <Add visible={appState == 2} setAppState={setAppState}/>
                 <Journal visible={appState == 3} setAppState={setAppState} />
             </div>
