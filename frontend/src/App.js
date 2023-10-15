@@ -6,6 +6,8 @@ import Journal from "./components/Journal";
 
 import Login from './components/Login'
 
+const DEFAULT_SCROLL_AMT = 4000;
+
 const computeDegrees = (amt) => {
     return 90 - (amt / 100 > 90 ? 90 : amt/100);
 }
@@ -13,7 +15,7 @@ const computeDegrees = (amt) => {
 export default function App() {
     const [add, setAdd] = useState(false);
     const [journal, setJournal] = useState(false);
-    const [scrollAmount, setScrollAmount] = useState(0)
+    const [scrollAmount, setScrollAmount] = useState(DEFAULT_SCROLL_AMT)
     
     function toggleAdd() {
         setAdd(prev => !prev);
@@ -24,7 +26,7 @@ export default function App() {
 
     useEffect(() => {
         const handleScroll = (e) => {
-            setScrollAmount((current) => Math.max(Math.min(current + e.deltaY, 9000), 0))
+            setScrollAmount((current) => Math.min(Math.max(current + e.deltaY, DEFAULT_SCROLL_AMT), 9000))
         }
 
         window.addEventListener('wheel', handleScroll)
