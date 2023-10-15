@@ -53,7 +53,7 @@ const Calendar = ({style, calendarWidth}) => {
                 return (
                     <React.Fragment key={index}>
                         {value && 
-                            <Cell src={SCRIBBLES[value]} index={index} calendarWidth={calendarWidth}/>
+                            <Cell src={SCRIBBLES[value[1]]} index={index} calendarWidth={calendarWidth}/>
                         }
                     </React.Fragment>
                 )
