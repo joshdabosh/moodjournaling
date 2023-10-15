@@ -1,16 +1,21 @@
 import { motion } from "framer-motion"
 
-const Cell = ({ color, index }) => {
+const rowPositions = ["14.05em", "17.6em", "21.8em", "25.4em", "29em"]
+const columnPositions = ["0.5em", "4.3em", "8.3em", "12.6em", "16.8em", "21.9em", "25.9em"]
+const widths = ["2.3em", "2.6em", "3em", "2.8em", "3.7em", "2.65em", "2.7em"]
+const heights = ["2.3em", "3em", "2.4em", "2.5em", "1.9em"]
+
+const Cell = ({ src, index }) => {
     return (
-        <motion.div
+        <motion.img
             style={{
-                display: "inline-block",
-                backgroundColor: color,
+                position: "absolute",
                 borderRadius: "10px",
-                width: "2em",
-                height: "2em",
-                gridRow: Math.trunc(index/7)+1,
-                gridColumn: (index % 7)+1
+                filter: "brightness(97%)",
+                width: widths[(index % 7)],
+                height: heights[Math.trunc(index/7)],
+                top: rowPositions[Math.trunc(index/7)],
+                left: columnPositions[(index % 7)]
             }}
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -19,6 +24,7 @@ const Cell = ({ color, index }) => {
                 duration: 0.75,
                 delay: index/50
             }}
+            src={src}
         />
     )
 }
