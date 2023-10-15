@@ -47,7 +47,7 @@ export default function Journal({visible, toggleVisible, setAppState, isUserLogg
         if (visible == false && isUserLoggedIn == true) {
             populate_temp_objects(temp_objects)
         }
-    }, [visible, isUserLoggedIn])
+    }, [isUserLoggedIn])
     const [objects, setObjects] = useState(temp_objects
         /*
         [
