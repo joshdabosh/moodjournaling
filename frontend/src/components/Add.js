@@ -84,7 +84,7 @@ export default function Add({visible}){
                     <textarea  maxLength={10000} type="text"  value={inputValue} onChange={handleChange} />
                 </form>
                     <img src={inputPaper} id="paperImage"/>
-                    <button onClick={submitEntry}> ky5 </button>
+                    
             </motion.div>}
             
             {visible && <motion.img className="directions" src={directions} key="test22"

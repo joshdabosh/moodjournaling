@@ -11,7 +11,7 @@ const computeDegrees = (amt) => {
 }
 
 export default function App() {
-    const [appState, setAppState] = useState(0); // 0 = login; 1 = landing; 2 = add; 3 = journal 
+    const [appState, setAppState] = useState(1); // 0 = login; 1 = landing; 2 = add; 3 = journal 
     const [add, setAdd] = useState(false);
     const [journal, setJournal] = useState(false);
     const [scrollAmount, setScrollAmount] = useState(0)
