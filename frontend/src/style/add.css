@@ -14,7 +14,7 @@
   font-size: 5rem;
   position: absolute;
   z-index: 1;
-  top:80px;
+  
 }
 .addPaper form textarea {
   height:30vh;
@@ -44,6 +44,7 @@
   margin-left: 00px;
   margin-bottom: -300px;
   transform: rotate(30deg);
+  z-index: 1;
 }
 .eraser {
   width: 10vw;
@@ -56,20 +57,37 @@
   width:2vw;
   height: auto;
   position:absolute;
-  top:10px;
-  right:30vw;
+  top:25px;
+  right:20vw;
 }
 .paperclip2 {
   width:2vw;
   height: auto;
   position: absolute;
   top: 10px;
-  right: 30vw;
+  right: 22.5vw;
 }
 #paperImage {
   margin-top: 25vh;
   margin-right: 0vw;
   width:50vw;
   height:auto;
-  position: relative;
+  position: 
+  relative;
+}
+.pen{
+  position:absolute;
+  width:10vw;
+  right:100px;
+  bottom:0;
+}
+.pencil {
+  margin: -3px;
+  width:3vw;
+}
+.pencilsWrapper{
+  position:absolute;
+  bottom: 0;
+  left:150px;
+  z-index: 0;
 }
