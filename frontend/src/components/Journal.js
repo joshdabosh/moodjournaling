@@ -49,6 +49,7 @@ export default function Journal({visible, toggleVisible, setAppState, isUserLogg
             populate_temp_objects(temp_objects)
         }
     }, [visible, isUserLoggedIn, forceRefetch])
+    }, [isUserLoggedIn])
     const [objects, setObjects] = useState(temp_objects
         /*
         [
