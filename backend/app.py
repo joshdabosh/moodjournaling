@@ -1,4 +1,4 @@
-from flask import Flask, request, session, Response
+from flask import Flask, request, session, Response, jsonify
 from flask_session import Session
 import psycopg2
 from argon2 import PasswordHasher
@@ -40,7 +40,12 @@ def login():
     user = cur.fetchone()
     if (ph.verify(user[1], password)):
         session["name"] = username
-    return ""
+        response = jsonify({"status":"ok"})
+    else:
+        response = jsonify({"status":"failed"})
+
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 @app.post("/register")
 def register():
@@ -49,20 +54,38 @@ def register():
     cur.execute("INSERT INTO users (username, password) VALUES (%s, %s)",
                 (username, ph.hash(password)))
     cur.execute("SELECT * FROM users")
-    return ""
+
+    response = jsonify({})
+
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 @app.post("/new_entry")
 def new_entry():
+    if (session.get("name") == None):
+        response = jsonify({"error":"need to log in"})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response, 403
+
     mood = request.get_json()['mood']
     entry = request.get_json()['entry']
     cur.execute("INSERT INTO entries (username, date, mood, entry) VALUES (%s, %s, %s, %s)",
                 (session.get("name"), date.today(), mood, entry,))
     cur.execute("INSERT INTO entries (image) VALUES (%s)",
                 (run_pipeline(entry),))
-    return ""
+    
+    response = jsonify({})
+
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 @app.post("/get_entry")
 def get_entry():
+    if (session.get("name") == None):
+        response = jsonify({"error":"need to log in"})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response, 403
+
     date = request.get_json()['date']
     cur.execute("SELECT date, mood, entry, picture FROM entries WHERE username=%s AND date=%s", (session.get("name"), date))
     # print(cur.fetchone())
@@ -70,11 +93,21 @@ def get_entry():
     if not res:
         return ""
     print(res)
-    return list(res)
+
+    response = jsonify({"results":list(res)})
+
+    response.headers.add('Access-Control-Allow-Origin', '*')
+
+    return response
 
 
 @app.post("/get_calendar")
 def get_calendar():
+    if (session.get("name") == None):
+        response = jsonify({"error":"need to log in"})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response, 403
+    
     today = date.fromisoformat(request.get_json()['date'])
     if not today:
         today = date.today()
@@ -93,6 +126,11 @@ def get_calendar():
     for x in result:
         print((x[0] - first_day).days)
         moods[(x[0] - first_day).days] = x
-    return moods
+
+    response = jsonify({"results":moods})
+
+    response.headers.add('Access-Control-Allow-Origin', '*')
+
+    return response
 
 app.run("0.0.0.0", 5000)
