@@ -1,6 +1,8 @@
 import BulletinBoard from '../../images/bulletinboard.png'
 import Calendar from '../Calendar'
 import ShelfBear from '../../images/shelf.png'
+import Carpet from "../../images/carpet.png"
+import ScrollPoster from "../../images/scrollposter.png"
 
 const computeTopDisplacement = (amt) => {
     return 20-(amt-4000)/10
@@ -22,21 +24,13 @@ const Background = ({style, scrollAmount, authenticated}) => {
     return (
         <div style={{...style}}>
             <div style={{
-                backgroundColor: "grey",
                 position: "absolute",
-                height: `${computeHeight(scrollAmount)}px`,
+                height: `${computeHeight(scrollAmount)/2}px`,
                 width: "100vw",
                 bottom: 0
             }}>
+                <img src={Carpet} style={{position: "absolute", width: "100vw", }} />
             </div>
-
-            {/* {authenticated &&
-                <Calendar style={{
-                    zIndex:1,
-                    left: `calc((100vw - 200px) / 2)`,
-                }}/>
-            } */}
-
 
             <div
                 style={{
@@ -48,7 +42,6 @@ const Background = ({style, scrollAmount, authenticated}) => {
                     transformOrigin: "top",
                 }}
             >
-
                 <img src={ShelfBear}
                     style={{
                         position: "absolute",
@@ -59,6 +52,7 @@ const Background = ({style, scrollAmount, authenticated}) => {
                         transform: `perspective(300vh) rotateX(${computeDegrees(scrollAmount)}deg)`,
                     }}
                 />
+
                 <img src={BulletinBoard} style={{
                     width: "100%",
                     position: "absolute"
@@ -73,6 +67,17 @@ const Background = ({style, scrollAmount, authenticated}) => {
                             width: `calc((${computeWidth(scrollAmount)}px) / 3)`
                         }}
                         calendarWidth={computeWidth(scrollAmount)/3}
+                    />
+                }
+                
+                {!authenticated &&
+                    <img src={ScrollPoster} 
+                        style={{
+                            position: "absolute",
+                            top: "100px",
+                            left: `calc((100% - (${computeWidth(scrollAmount)}px / 10)) / 2)`,
+                            width: `calc((${computeWidth(scrollAmount)}px) / 10)`
+                        }}
                     />
                 }
             </div>
