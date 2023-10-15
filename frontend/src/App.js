@@ -18,10 +18,10 @@ export default function App() {
 
     return (
         <div>
-            <Login />
-            {/* <Landing toggleAdd={toggleAdd} toggleJournal={toggleJournal}/>
+            {/* <Login /> */}
+            <Landing toggleAdd={toggleAdd} toggleJournal={toggleJournal}/>
             <Add visible={add}/>
-            <Journal visible={journal} toggleVisible={toggleJournal} /> */}
+            <Journal visible={journal} toggleVisible={toggleJournal} />
         </div>
     )
 }

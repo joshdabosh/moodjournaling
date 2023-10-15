@@ -90,8 +90,8 @@ export default function Journal({visible, toggleVisible}) {
                 </HTMLFlipBook>
             </motion.div>}
         </AnimatePresence>
-        <button onClick={() => console.log(currentDate)}> asdfasdf </button>
-        <button onClick={async () => console.log(getEntryForDate())}> get </button>
+        {/* <button onClick={() => console.log(currentDate)}> asdfasdf </button>
+        <button onClick={async () => console.log(getEntryForDate())}> get </button> */}
        </> 
             
           

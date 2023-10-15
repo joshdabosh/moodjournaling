@@ -17,15 +17,18 @@
   
 }
 .addPaper form textarea {
-  height:30vh;
-  width:30vw;
-  font-size: 3rem;
+  height:45vh;
+  width:40vw;
+  font-size: 6vh;
   background-color: 0;
   outline: none;
   background: transparent;
   border:none;
   resize:none;
   overflow: hidden;
+  position: relative;
+  left:8vw;
+  top:4vw;
 }
 .directions {
   width:30vw;
