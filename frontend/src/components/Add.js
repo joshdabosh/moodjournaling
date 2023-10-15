@@ -34,7 +34,7 @@ export default function Add({visible}){
         fetch("http://127.0.0.1:5000/new_entry", {
             method: "POST",
             mode: "cors",
-            credentials: "same-origin",
+            credentials: "include",
             headers: {
                 "Content-Type": "application/json",
             },

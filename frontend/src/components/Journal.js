@@ -10,12 +10,12 @@ import "../style/journal.css"
 
 
 
-export default function Journal({visible, toggleVisible}) {
+export default function Journal({visible, toggleVisible, setAppState}) {
     const getEntryForDate = async (date) => {
         let response = await fetch("http://127.0.0.1:5000/get_entry", {
             method: "POST",
             mode: "cors",
-            credentials: "same-origin",
+            credentials: "include",
             headers: {
                 "Content-Type": "application/json",
             },
@@ -49,7 +49,7 @@ export default function Journal({visible, toggleVisible}) {
            */
           function handleClickOutside(event) {
             if (ref.current && ref.current.contains(event.target)) {
-              toggleVisible();
+                setAppState(1);
                 setCurrentDate(0)
             }
             else{
@@ -90,8 +90,6 @@ export default function Journal({visible, toggleVisible}) {
                 </HTMLFlipBook>
             </motion.div>}
         </AnimatePresence>
-        {/* <button onClick={() => console.log(currentDate)}> asdfasdf </button>
-        <button onClick={async () => console.log(getEntryForDate())}> get </button> */}
        </> 
             
           
