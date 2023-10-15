@@ -20,7 +20,7 @@ import pencil8 from "../images/pencil8.png"
 import { motion, AnimatePresence  } from "framer-motion"
 import "../style/add.css"
 
-export default function Add({visible, setAppState}){
+export default function Add({visible, setAppState, forceRefetch, setForceRefetch}){
     const [inputValue, setInputValue] = useState('');
     // 1 = low, 8 = high
     const [moodValue, setMoodValue] = useState(0);
@@ -54,6 +54,10 @@ export default function Add({visible, setAppState}){
                 })
             })
         }
+        
+        setTimeout(() => {
+            setForceRefetch(!forceRefetch)
+        }, 20000)
     }
 
     let pencilsImages =[pencil1, pencil2, pencil3, pencil4, pencil5, pencil6, pencil7, pencil8]

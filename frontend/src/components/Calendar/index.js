@@ -24,7 +24,7 @@ const colorsList = ["#fff996",
 
 const SCRIBBLES = [Colored1, Colored2, Colored3, Colored4, Colored5, Colored6, Colored7, Colored8]
 
-const Calendar = ({style, calendarWidth}) => {
+const Calendar = ({style, calendarWidth, forceRefetch}) => {
     const [calendarData, setCalendarData] = useState([])
 
     const fetchCalendarData = async () => {
@@ -44,7 +44,7 @@ const Calendar = ({style, calendarWidth}) => {
 
     useEffect(() => {
         fetchCalendarData()
-    }, [])
+    }, [forceRefetch])
     
     return (
         <div style={{...style, position:"relative"}}>

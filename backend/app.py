@@ -126,7 +126,7 @@ def new_entry():
     cur.execute("INSERT INTO entries (username, date, mood, entry) VALUES (%s, %s, %s, %s)",
                 (session.get("name"), date.today(), mood, entry,))
     print(date.today())
-    print(run_pipeline(entry))
+    # print(run_pipeline(entry))
     cur.execute("""
                 UPDATE entries 
                 SET picture=%s

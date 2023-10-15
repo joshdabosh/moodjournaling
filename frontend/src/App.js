@@ -72,10 +72,12 @@ export default function App() {
         }
         
     }, [])
+
+    const [forceRefetch, setForceRefetch] = useState(false)
       
     return (
         <div style={{backgroundColor:"#F4E7CF", width:"100vw", height:"100vh"}}>
-            <Background scrollAmount={scrollAmount} authenticated={isUserLoggedIn}/>
+            <Background forceRefetch={forceRefetch} scrollAmount={scrollAmount} authenticated={isUserLoggedIn}/>
             <div style={{
                 transform: `perspective(100vh) rotateX(${computeDegrees(scrollAmount)}deg)`,
                 transformOrigin: "bottom",
@@ -83,9 +85,9 @@ export default function App() {
             }}>
                 <Login visible={appState == 0} setAppState={setAppState} setIsUserLoggedIn={setIsUserLoggedIn} />
                 <Landing visible={appState != 0} appState={appState} setAppState={setAppState} 
-                    scrollToBottom={scrollToBottom} scrollToTop={scrollToTop}/>
-                <Add visible={appState == 2} setAppState={setAppState}/>
-                <Journal visible={appState == 3} setAppState={setAppState} isUserLoggedIn={isUserLoggedIn} />
+                    scrollToBottom={scrollToBottom} scrollToTop={scrollToTop} forceRefetch={forceRefetch} setForceRefetch={setForceRefetch}/>
+                <Add visible={appState == 2} setAppState={setAppState} forceRefetch={forceRefetch} setForceRefetch={setForceRefetch}/>
+                <Journal visible={appState == 3} setAppState={setAppState} isUserLoggedIn={isUserLoggedIn} forceRefetch={forceRefetch} setForceRefetch={setForceRefetch} />
             </div>
         </div>
     )

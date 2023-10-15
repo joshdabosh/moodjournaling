@@ -20,7 +20,7 @@ const computeHeight = (amt) => {
     return 250 + (amt-4000)/12
 }
 
-const Background = ({style, scrollAmount, authenticated}) => {
+const Background = ({style, scrollAmount, authenticated, forceRefetch}) => {
     return (
         <div style={{...style}}>
             <div style={{
@@ -66,6 +66,7 @@ const Background = ({style, scrollAmount, authenticated}) => {
                             left: `calc((100% - (${computeWidth(scrollAmount)}px / 3)) / 2)`,
                             width: `calc((${computeWidth(scrollAmount)}px) / 3)`
                         }}
+                        forceRefetch={forceRefetch}
                         calendarWidth={computeWidth(scrollAmount)/3}
                     />
                 }

@@ -12,7 +12,7 @@ import "../style/journal.css"
 
 
 
-export default function Journal({visible, toggleVisible, setAppState, isUserLoggedIn}) {
+export default function Journal({visible, toggleVisible, setAppState, isUserLoggedIn, forceRefetch}) {
     const getEntryForDate = async (date) => {
         let response = await fetch("http://localhost:5000/get_entry", {
             method: "POST",
@@ -26,6 +26,7 @@ export default function Journal({visible, toggleVisible, setAppState, isUserLogg
             })
         })
         let entry = await response.json()
+
         return entry
     }
     const [currentDate, setCurrentDate] = useState(Date.now())
@@ -47,7 +48,7 @@ export default function Journal({visible, toggleVisible, setAppState, isUserLogg
         if (visible == false && isUserLoggedIn == true) {
             populate_temp_objects(temp_objects)
         }
-    }, [visible, isUserLoggedIn])
+    }, [visible, isUserLoggedIn, forceRefetch])
     const [objects, setObjects] = useState(temp_objects
         /*
         [
