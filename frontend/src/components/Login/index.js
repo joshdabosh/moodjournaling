@@ -21,7 +21,8 @@ const Login = (props) => {
         })
 
         const login_result = await resp.json()
-        if (login_result.status = "login successful") {
+        if (login_result.status == "login successful") {
+            props.setIsUserLoggedIn(true)
             props.setAppState(1)
         }
         

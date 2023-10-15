@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import paper from "../images/paper.png"
 import imagePlaceholder from "../images/polaroid.png"
 import directions from "../images/colorpencilpaper.png"
@@ -28,7 +28,17 @@ export default function Add({visible, setAppState}){
 	const handleChange = (event) => {
 		setInputValue(event.target.value);
 	};
-    
+    function wiggle() {
+        for(let i = 1; i <= 8; i++){
+            setTimeout(() =>{
+                setMoodValue(i)
+            }, i * 50)
+        }
+        setTimeout(() => {
+            setMoodValue(0)
+        }, 9 * 50)
+        
+    }
     console.log(moodValue);
     const submitEntry = () => {
         if (moodValue != 0) {
@@ -105,7 +115,13 @@ export default function Add({visible, setAppState}){
             }}
             />}
             {visible && <motion.img className="eraser" src={eraser} key="eraser"
-            onClick={()=> setInputValue("")}
+            onClick={
+                ()=> {
+                setInputValue("")
+                setMoodValue(0)
+                }
+            
+            }
             animate={{
                 rotate:-35,
                 y:0,
@@ -115,9 +131,9 @@ export default function Add({visible, setAppState}){
                 rotate:75,
                 y:300
             }}
-            
             exit={{
-                y:300
+                y:1000,
+                transition: { duration: 1}
             }}
             whileTap={{ scale: 0.9 }}
             whileHover={{
@@ -126,42 +142,75 @@ export default function Add({visible, setAppState}){
             }}
             ></motion.img>}
             {visible && <motion.img className="paperclip" src={paperclip} key="paperclip"
+             onClick={
+                () => {
+                    setAppState(1)
+                }
+            }
             animate={{
                 rotate:75,
-                y:0
+                y:0,
+                transition: {
+                    duration: 0.6
+                }
             }}
             initial={{
                 rotate:-45,
                 y:1000
             }}
-            transition={{
-                duration: 0.6
+            
+            whileHover={{
+                scale:1.2,
+                transition: { duration: 0.2},
             }}
             exit={{
                 y:1000,
-                duration: 1
+                transition: { duration: 0.8}
             }}></motion.img>}
             {visible && <motion.img className="paperclip2" src={paperclip} key="paperclip2"
+            onClick={
+                () => {
+                    setAppState(1)
+                }
+            }
             animate={{
                 rotate:35,
-                y:0
+                y:0,
+                transition: {
+                    duration: 0.7
+                }
             }}
             initial={{
                 rotate:-20,
                 y:1200
             }}
-            transition={{
-                duration: 0.7
+            whileHover={{
+                scale:1.2,
+                transition: { duration: 0.2},
             }}
             exit={{
-                y:1000
+                y:1000,
+                transition: { duration: 0.7},
             }}></motion.img>}
             {visible && <motion.img className="pen" src={pen} key="pencil"
             onClick={
                 () => {
-                    submitEntry()
-                    setAppState(1)
-                    setInputValue("")
+                    if(moodValue == 0) {
+                        wiggle()
+                    } else {
+                        submitEntry()
+                    
+                        setTimeout(()=>{
+                            setAppState(1)
+                            
+                        }, 200)
+                        setTimeout(() =>{
+                            setInputValue("")
+                            setMoodValue(0)
+                        }, 250)
+                    }
+                    
+                    
                 }
             }
             animate={{

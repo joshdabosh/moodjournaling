@@ -68,6 +68,12 @@ def login():
         session["name"] = username
         return {"status": "login successful"}
 
+@app.get("/authcheck")
+def authcheck():
+    if session.get("name") == None:
+        return {"status":"failed"}, 403
+    return {"status":"ok"}
+
 @app.post("/register")
 def register():
     username = request.get_json()['username']

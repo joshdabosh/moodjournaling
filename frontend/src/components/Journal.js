@@ -3,6 +3,8 @@ import { forwardRef, useRef, useEffect, useState } from "react";
 import HTMLFlipBook from 'react-pageflip';
 import left1 from "../images/left1.png"
 import right1 from "../images/right1.png"
+import left2 from "../images/left2.png"
+import right2 from "../images/right2.png"
 import background from "../images/journal.png"
 import tree from "../images/tree.jpg"
 
@@ -29,10 +31,11 @@ export default function Journal({visible, toggleVisible, setAppState}) {
     const [currentDate, setCurrentDate] = useState(Date.now())
     let temp_objects = [];
     const populate_temp_objects = async (objects) => {
-        for (let i = 1; i < 50; i++) {
+        // objects = []
+        for (let i = 0; i <= 50; i++) {
             console.log(i)
             let res = await getEntryForDate(Date.now() - 1000 * 60 * 60 * 24 * (50 - i))
-        console.log(res)
+            console.log(res)
             objects.push({
                 entry: res.result[2],
                 image: res.result[3]
@@ -40,7 +43,9 @@ export default function Journal({visible, toggleVisible, setAppState}) {
         }
     }
     useEffect(() => {
-        populate_temp_objects(temp_objects)
+        if (visible == false) {
+            populate_temp_objects(temp_objects)
+        }
     }, [visible])
     const [objects, setObjects] = useState(temp_objects
         /*
@@ -189,12 +194,18 @@ function makePages(objects){
     const pages = objects.map((object) => {
         var classname;
         var format;
-        if(counter % 2 == 0) {
-            classname = "page right"
+        if(counter % 4 == 0) {
+            classname = "page right right2"
+            format = right2
+         } else if(counter % 2 == 0) {
+            classname = "page right right1"
             format = right1
-        } else {
-            classname = "page left"
+        } else if(counter % 4 == 1)  {
+            classname = "page left left1"
             format = left1
+        } else {
+            classname = "page left left2"
+            format = left2
         }
         return (
             <Page 

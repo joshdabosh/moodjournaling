@@ -31,7 +31,7 @@
     height: 550px;
     z-index: 0;
 }
-.left p{
+.left1 p{
     position: absolute;
     z-index: 1;
     color: #5c6274;
@@ -43,13 +43,25 @@
     font-family: 'Just Another Hand', cursive;
     transform: rotate(-2deg);
 }
+.left2 p {
+    position: absolute;
+    z-index: 1;
+    color: #5c6274;
+    font-size: 1.5rem;
+    bottom:115px;
+    left: 100px;
+    width:260px;
+    height:50px;
+    font-family: 'Just Another Hand', cursive;
+    transform: rotate(2deg);
+}
 .left {
     margin-right: 15px;
 }
 .right {
     margin-left: 15px;
 }
-.right p {
+.right1 p {
     position: absolute;
     z-index: 1;
     color: #5c6274;
@@ -59,23 +71,46 @@
     width:175px;
     height:150px;
     font-family: 'Just Another Hand', cursive;
-
 }
-.right .aiImage {
+.right2 p {
+    position: absolute;
+    z-index: 1;
+    color: #5c6274;
+    font-size: 1.5rem;
+    top:20px;
+    left:40px;
+    width:330px;
+    height:150px;
+    font-family: 'Just Another Hand', cursive;
+    text-align: right;
+}
+.right1 .aiImage {
     width:130px;
     height:130px;
     right:28px;
     top:197px
 }
-.right .aiImage2{
+.right1 .aiImage2{
     width:130px;
     height:130px;
     right:97px;
     top: 36px;
 }
-.left .aiImage {
+.right2 .aiImage{
+    width:215px;
+    height:215px;
+    bottom:50px;
+    left: 39px;
+}
+.left1 .aiImage {
     width:200px;
     height:200px;
     left:48px;
     top:40px;
+}
+.left2 .aiImage {
+    width:215px;
+    height:210px;
+    left:112px;
+    top:108px;
 }
