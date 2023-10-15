@@ -6,8 +6,6 @@ import Journal from "./components/Journal";
 
 import Login from './components/Login'
 
-import Calendar from './components/Calendar'
-
 import Background from './components/Background'
 
 const DEFAULT_SCROLL_AMT = 4000;
@@ -49,17 +47,19 @@ export default function App() {
             
         }
     }
-    
-    useEffect(() => {
-        fetch("http://localhost:5000/authcheck", {
+
+    const checkAuth = async () => {
+        const resp = await fetch("http://localhost:5000/authcheck", {
             credentials: 'include'
-        }).then(resp => {
-            if (resp.ok) {
-                setIsUserLoggedIn(true)
-                setAppState(1)
-            }
         })
-    }, [])
+
+        if (resp.ok) {
+            setIsUserLoggedIn(true)
+            setAppState(1)
+        }
+    }
+    
+    useEffect(() => {checkAuth()}, [])
 
     useEffect(() => {
         const handleScroll = (e) => {
@@ -75,13 +75,13 @@ export default function App() {
       
     return (
         <div style={{backgroundColor:"#F4E7CF", width:"100vw", height:"100vh"}}>
-            <Background scrollAmount={scrollAmount}/>
+            <Background scrollAmount={scrollAmount} authenticated={isUserLoggedIn}/>
             <div style={{
                 transform: `perspective(100vh) rotateX(${computeDegrees(scrollAmount)}deg)`,
                 transformOrigin: "bottom",
                 height: "100vh"
             }}>
-                <Login visible={appState == 0} setAppState={setAppState}/>
+                <Login visible={appState == 0} setAppState={setAppState} setIsUserLoggedIn={setIsUserLoggedIn} />
                 <Landing visible={appState != 0} appState={appState} setAppState={setAppState} 
                     scrollToBottom={scrollToBottom} scrollToTop={scrollToTop}/>
                 <Add visible={appState == 2} setAppState={setAppState}/>
