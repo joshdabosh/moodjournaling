@@ -34,11 +34,14 @@
 .left p{
     position: absolute;
     z-index: 1;
-    color:black;
+    color: #5c6274;
+    font-size: 1.5rem;
     bottom:50px;
     left: 50px;
     width:330px;
     height:50px;
+    font-family: 'Just Another Hand', cursive;
+    transform: rotate(-2deg);
 }
 .left {
     margin-right: 15px;
@@ -49,12 +52,14 @@
 .right p {
     position: absolute;
     z-index: 1;
-    color: black;
-    
+    color: #5c6274;
+    font-size: 1.5rem;
     bottom:65px;
     left:40px;
     width:175px;
     height:150px;
+    font-family: 'Just Another Hand', cursive;
+
 }
 .right .aiImage {
     width:130px;

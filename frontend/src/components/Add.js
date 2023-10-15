@@ -1,7 +1,12 @@
 import { useState } from "react";
 import paper from "../images/paper.png"
 import imagePlaceholder from "../images/polaroid.png"
+import directions from "../images/colorpencilpaper.png"
 import pencils from "../images/pencils.png"
+import pen from "../images/pen.png"
+import eraser from "../images/eraser.png"
+import paperclip from "../images/paperclip.png"
+import inputPaper from "../images/inputpaper.png"
 import { motion, AnimatePresence  } from "framer-motion"
 import "../style/add.css"
 
@@ -19,7 +24,6 @@ export default function Add({visible}){
             {visible && < motion.div className="addPaper"
             key="test" 
             animate={{
-                rotate: 6, 
                 y:0
             }} 
             initial={{
@@ -34,10 +38,10 @@ export default function Add({visible}){
                 <form>
                     <textarea  maxLength={50} type="text"  value={inputValue} onChange={handleChange} />
                 </form>
-                    <img src={paper} id="paperImage"/>
+                    <img src={inputPaper} id="paperImage"/>
             </motion.div>}
             
-            {visible && <motion.img className="imagePlaceholder" src={imagePlaceholder} key="test22"
+            {visible && <motion.img className="directions" src={directions} key="test22"
             animate={{
                 rotate:-9, 
                 y:0

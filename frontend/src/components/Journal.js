@@ -53,12 +53,6 @@ export default function Journal({visible, toggleVisible}) {
                 <img ref={wrapperRef} src={background} id="bookBackground"></img>
                 <HTMLFlipBook className="book" width={420} height={550} drawShadow={false} flippingTime={700}>
                     {makePages(objects)}
-                    {/* <Page number="1" classn="left" image={left1}>Page text</Page>
-                    <Page number="2" classn="right" image={right1}>Page text</Page>
-                    <Page number="3" classn="left" image={left1}>Page text</Page>
-                    <Page number="4" classn="right" image={right1}>Page text</Page>
-                    <Page number="5" classn="left" image={left1}>Page text</Page>
-                    <Page number="6" classn="right" image={right1} >Page text</Page> */}
                 </HTMLFlipBook>
             </motion.div>}
         </AnimatePresence>
@@ -94,6 +88,10 @@ let objects = [
     },
     {
         entry: "hehehe haw hehehe haw hehehe haw hehehe ahw",
+        image: tree
+    },
+    {
+        entry:"The quick brown fox jumped over the lazy dog and decided to eat his own poo wow this is such a craazy story frong",
         image: tree
     }
 ]
