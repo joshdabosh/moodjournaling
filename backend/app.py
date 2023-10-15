@@ -5,9 +5,18 @@ from argon2 import PasswordHasher
 from datetime import date, timedelta
 from pipeline.pipeline import run_pipeline
 
+from flask.sessions import SecureCookieSessionInterface
+
+
 app = Flask(__name__)
+
+session_cookie = SecureCookieSessionInterface().get_signing_serializer(app)
+
+
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+app.config['SESSION_COOKIE_SAMESITE'] = "None"
+app.config['SESSION_COOKIE_SECURE'] = True
 Session(app)
 
 conn = psycopg2.connect(database = "eylwyufz",
@@ -23,10 +32,20 @@ def handle_preflight():
     if request.method == "OPTIONS":
         res = Response()
         res.headers['X-Content-Type-Options'] = '*'
-        res.headers['Access-Control-Allow-Origin'] = '*'
-        res.headers['Access-Control-Allow-Headers'] = '*'
+        res.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        res.headers['Access-Control-Allow-Headers'] = 'content-type'
         res.headers['Access-Control-Allow-Methods'] = '*'
+        res.headers.set("Access-Control-Allow-Credentials", "true")
         return res
+
+@app.after_request
+def add_cors(response):
+    if request.method != "OPTIONS":
+        response.headers.set("Access-Control-Allow-Origin", "http://localhost:3000")
+        response.headers.set("Access-Control-Allow-Credentials", "true")
+        response.headers.set("X-Content-Type-Options", "*")
+    
+    return response
 
 @app.route("/")
 def index():
@@ -40,12 +59,9 @@ def login():
     user = cur.fetchone()
     if (ph.verify(user[1], password)):
         session["name"] = username
-        response = jsonify({"status":"ok"})
+        return {"status": "ok"}
     else:
-        response = jsonify({"status":"failed"})
-
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    return response
+        return {"status": "failed"}
 
 @app.post("/register")
 def register():
@@ -57,16 +73,13 @@ def register():
     
     session["name"] = username
 
-    response = jsonify({})
-
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    return response
+    return {}
 
 @app.post("/new_entry")
 def new_entry():
     if (session.get("name") == None):
         response = jsonify({"error":"need to log in"})
-        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
         return response, 403
 
     mood = request.get_json()['mood']
@@ -82,16 +95,13 @@ def new_entry():
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response, 404
     
-    response = jsonify({})
-
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    return response
+    return {}
 
 @app.post("/get_entry")
 def get_entry():
     if (session.get("name") == None):
         response = jsonify({"error":"need to log in"})
-        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
         return response, 403
 
     date = request.get_json()['date']
@@ -102,18 +112,14 @@ def get_entry():
         return ""
     print(res)
 
-    response = jsonify({"results":list(res)})
-
-    response.headers.add('Access-Control-Allow-Origin', '*')
-
-    return response
+    return {"results":list(res)}
 
 
 @app.post("/get_calendar")
 def get_calendar():
     if (session.get("name") == None):
         response = jsonify({"error":"need to log in"})
-        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
         return response, 403
     
     today = date.fromisoformat(request.get_json()['date'])
@@ -135,10 +141,6 @@ def get_calendar():
         print((x[0] - first_day).days)
         moods[(x[0] - first_day).days] = x
 
-    response = jsonify({"results":moods})
-
-    response.headers.add('Access-Control-Allow-Origin', '*')
-
-    return response
+    return {"results":moods}
 
 app.run("0.0.0.0", 5000)
