@@ -1,5 +1,6 @@
 import BulletinBoard from '../../images/bulletinboard.png'
 import Calendar from '../Calendar'
+import ShelfBear from '../../images/shelf.png'
 
 const computeTopDisplacement = (amt) => {
     return 20-(amt-4000)/10
@@ -36,6 +37,7 @@ const Background = ({style, scrollAmount, authenticated}) => {
                 }}/>
             } */}
 
+
             <div
                 style={{
                     position: "absolute",
@@ -46,6 +48,17 @@ const Background = ({style, scrollAmount, authenticated}) => {
                     transformOrigin: "top",
                 }}
             >
+
+                <img src={ShelfBear}
+                    style={{
+                        position: "absolute",
+                        right: `calc(0px - (100vw - (1000px + ${-computeWidth(scrollAmount)/2+500}px)) / 2)`,
+                        zIndex: 2,
+                        top: `${computeTopDisplacement(scrollAmount)/5}px`,
+                        width: `calc((${computeWidth(scrollAmount)}px) / 5)`,
+                        transform: `perspective(300vh) rotateX(${computeDegrees(scrollAmount)}deg)`,
+                    }}
+                />
                 <img src={BulletinBoard} style={{
                     width: "100%",
                     position: "absolute"
