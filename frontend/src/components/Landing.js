@@ -1,5 +1,6 @@
 import desk from "../images/wood.png"
 import addPaper from "../images/addPaper.png"
+import papers from "../images/papers.png"
 import stack from "../images/stack.png"
 import journalAngle from "../images/journalangle3.png"
 import "../style/landing.css"
@@ -86,6 +87,22 @@ export default function Landing({visible, appState, setAppState, scrollToBottom,
                     scale:1.2,
                     transition: { duration: 0.2},
                 }}
+                ></motion.img>}
+                { showAddPile && <motion.img src={papers} id="papers" key="papers"
+                animate={{
+                    y:0,
+                    transition: { duration: 0.7},
+                    rotate: 20
+                }}
+                initial={{
+                    y:600
+                }}
+                exit={{
+                    y:700,
+                    transition: { duration: 1, delay: 0.3},
+                    rotate: 0
+                }}
+                variants={list}
                 ></motion.img>}
             </AnimatePresence>
             
