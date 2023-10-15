@@ -4,6 +4,7 @@ import HTMLFlipBook from 'react-pageflip';
 import left1 from "../images/left1.png"
 import right1 from "../images/right1.png"
 import background from "../images/journal.png"
+import tree from "../images/tree.jpg"
 
 import "../style/journal.css"
 
@@ -65,6 +66,7 @@ export default function Journal({visible, toggleVisible}) {
     const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef);
     return(
+        
         <AnimatePresence >
             {visible && <motion.div className="bookContainer" animate={{
                 y:0
@@ -81,12 +83,7 @@ export default function Journal({visible, toggleVisible}) {
             }} >
                 <img ref={wrapperRef} src={background} id="bookBackground"></img>
                 <HTMLFlipBook className="book" width={420} height={550} drawShadow={false} flippingTime={700}>
-                    <Page number="1" classn="left" image={left1}>Page text</Page>
-                    <Page number="2" classn="right" image={right1}>Page text</Page>
-                    <Page number="3" classn="left" image={left1}>Page text</Page>
-                    <Page number="4" classn="right" image={right1}>Page text</Page>
-                    <Page number="5" classn="left" image={left1}>Page text</Page>
-                    <Page number="6" classn="right" image={right1} >Page text</Page>
+                    {makePages(objects)}
                 </HTMLFlipBook>
             </motion.div>}
         </AnimatePresence>
@@ -95,19 +92,68 @@ export default function Journal({visible, toggleVisible}) {
           
     )
 }
-function makePages(){
-
-}
 const Page = forwardRef((props, ref) => {
-    var classname = "page " + props.classn
-    console.log(classname)
     return (
-      <div className={classname} ref={ref}> 
-        <img className="journalBackground" src={props.image}></img>
-        <p>{props.entry}</p>
+      <div className={props.className} ref={ref}> 
+        <img className="journalBackground" src={props.format}></img>
+        
+        <p className="entry">{props.entry}</p>
+        <img src={tree} className="aiImage"></img>
+        {props.className == "page right" && <img src={tree} className="aiImage2"/>}
       </div>
     );
   });
+
+let objects = [
+    {
+        entry: "I hate my life because my wife stole the kids and won the divorce settlement and killed my great grandma's husband",
+        image: tree
+    }, 
+    {
+        entry: "I hung out with friends today and had a good time",
+        image: tree
+    }, 
+    {
+        entry: "oooh ooh ah ah",
+        image: tree
+    },
+    {
+        entry: "hehehe haw hehehe haw hehehe haw hehehe ahw",
+        image: tree
+    },
+    {
+        entry:"The quick brown fox jumped over the lazy dog and decided to eat his own poo wow this is such a craazy story frong",
+        image: tree
+    }
+]
+console.log("pages")
+console.log(makePages(objects))
+function makePages(objects){
+    var counter = 1;
+    
+    const pages = objects.map((object) => {
+        var classname;
+        var format;
+        if(counter % 2 == 0) {
+            classname = "page right"
+            format = right1
+        } else {
+            classname = "page left"
+            format = left1
+        }
+        return (
+            <Page 
+                className={classname} 
+                number={counter++} 
+                format={format}
+                image={objects.image}
+                entry={object.entry}
+            ></Page>
+        )
+    })
+    return pages
+}
+
 
   
 /* <AnimatePresence >

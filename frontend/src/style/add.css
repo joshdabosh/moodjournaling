@@ -9,8 +9,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
-    
   }
   .addPaper form{
     font-size: 5rem;
@@ -29,9 +27,9 @@
     resize:none;
     overflow: hidden;
   }
-  .imagePlaceholder {
+  .directions {
     width:30vw;
-    height:50vh;
+    height:auto;
     position: absolute;
     top:0;
     transform: rotate(-15deg);
@@ -48,7 +46,9 @@
 
   }
   #paperImage {
-    width:80vw;
-    height:50vh;
+    margin-top: 20vh;
+    margin-right: 0vw;
+    width:60vw;
+    height:auto;
     position: relative;
   }
