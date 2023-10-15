@@ -2,7 +2,7 @@ from flask import Flask, request, session, Response, jsonify
 from flask_session import Session
 import psycopg2
 from argon2 import PasswordHasher
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from pipeline.pipeline import run_pipeline
 import base64
 
@@ -88,6 +88,8 @@ def register():
     
     session["name"] = username
 
+    conn.commit()
+
     return {}
 
 @app.post("/new_entry")
@@ -121,7 +123,7 @@ def new_entry():
         return response, 404
     """
     
-    # cur.commit()
+    conn.commit()
     return {}
 
 @app.post("/get_entry")
@@ -136,13 +138,13 @@ def get_entry():
     cur.execute("SELECT date, mood, entry, picture FROM entries WHERE username=%s AND date=%s", (session.get("name"), date))
     # print(cur.fetchone())
     res = cur.fetchone()
-    if not res:
+    if not res or res == []:
         return {"result": "no entry found"}
-    print(res)
+    # print("result of get_entry is", res)
     reslist = list(res)
     reslist[3] = reslist[3].tobytes()
     reslist[3] = base64.b64encode(reslist[3]).decode("utf-8")
-    print(reslist)
+    # print(reslist)
 
 
     return {"result":reslist}
@@ -168,11 +170,12 @@ def get_calendar():
     cur.execute("SELECT date, mood FROM entries WHERE username=%s AND date BETWEEN %s AND %s",
                 (session.get("name"), first_day, last_day))
     result = cur.fetchall()
-    print(result)
+    print("CALENDAR RESULTS:", result)
     moods = [None] * 35
     for x in result:
-        print((x[0] - first_day).days)
-        moods[(x[0] - first_day).days] = x
+        print((datetime(x[0].year, x[0].month, x[0].day) - first_day).days)
+        moods[(datetime(x[0].year, x[0].month, x[0].day) - first_day).days] = x
+        # moods[(x[0] - first_day).days] = x
 
     return {"results":moods}
 
