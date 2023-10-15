@@ -12,7 +12,7 @@ import "../style/journal.css"
 
 export default function Journal({visible, toggleVisible}) {
     const getEntryForDate = async (date) => {
-        let response = await fetch("http://127.0.0.1:5050/get_entry", {
+        let response = await fetch("http://127.0.0.1:5000/get_entry", {
             method: "POST",
             mode: "cors",
             credentials: "same-origin",
@@ -20,7 +20,7 @@ export default function Journal({visible, toggleVisible}) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                date: currentDate.toISOString()
+                date: new Date(currentDate).toISOString()
             })
         })
         let entry = await response.json()
@@ -29,7 +29,7 @@ export default function Journal({visible, toggleVisible}) {
     const [currentDate, setCurrentDate] = useState(Date.now())
     const [entries, setEntries] = useState([])
     const handleDateSwitch = async (direction) => {
-        setCurrentDate(currentDate + 1000 * 60 * 60 * 24)
+        setCurrentDate(currentDate - 1000 * 60 * 60 * 24)
         /*
         if (entries.length == 0) {
             setEntries([
@@ -50,9 +50,11 @@ export default function Journal({visible, toggleVisible}) {
           function handleClickOutside(event) {
             if (ref.current && ref.current.contains(event.target)) {
               toggleVisible();
+                setCurrentDate(0)
             }
             else{
                 console.log(ref)
+                console.log(new Date(currentDate).toISOString())
             }
           }
           // Bind the event listener
@@ -66,6 +68,7 @@ export default function Journal({visible, toggleVisible}) {
     const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef);
     return(
+        <>
         
         <AnimatePresence >
             {visible && <motion.div className="bookContainer" animate={{
@@ -87,7 +90,9 @@ export default function Journal({visible, toggleVisible}) {
                 </HTMLFlipBook>
             </motion.div>}
         </AnimatePresence>
-        
+        <button onClick={() => console.log(currentDate)}> asdfasdf </button>
+        <button onClick={async () => console.log(getEntryForDate())}> get </button>
+       </> 
             
           
     )
