@@ -92,6 +92,28 @@ def register():
 
     return {}
 
+@app.post("/populate_entry")
+def populate_entry():
+    if (session.get("name") == None):
+        response = jsonify({"error":"need to log in"})
+        response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
+        return response, 403
+
+    mood = request.get_json()['mood']
+    entry = request.get_json()['entry']
+    date = request.get_json()['date']
+    cur.execute("INSERT INTO entries (username, date, mood, entry) VALUES (%s, %s, %s, %s)",
+                (session.get("name"), date, mood, entry,))
+    cur.execute("""
+                UPDATE entries 
+                SET picture=%s
+                WHERE username=%s AND date=%s
+                """,
+                (run_pipeline(entry), session.get("name"), date))
+    
+    conn.commit()
+    return {}
+
 @app.post("/new_entry")
 def new_entry():
     if (session.get("name") == None):
@@ -111,17 +133,6 @@ def new_entry():
                 WHERE username=%s AND date=%s
                 """,
                 (run_pipeline(entry), session.get("name"), date.today()))
-    """
-    try:
-        cur.execute("INSERT INTO entries (image) VALUES (%s)",
-                    (run_pipeline(entry),))
-    except:
-        print("Failed to generate image")
-        response = jsonify({"error": "failed to generate image"})
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        # cur.execute("ROLLBACK")
-        return response, 404
-    """
     
     conn.commit()
     return {}
@@ -138,13 +149,13 @@ def get_entry():
     cur.execute("SELECT date, mood, entry, picture FROM entries WHERE username=%s AND date=%s", (session.get("name"), date))
     # print(cur.fetchone())
     res = cur.fetchone()
-    if not res or res == []:
+    if not res:
         return {"result": "no entry found"}
     # print("result of get_entry is", res)
     reslist = list(res)
     reslist[3] = reslist[3].tobytes()
     reslist[3] = base64.b64encode(reslist[3]).decode("utf-8")
-    # print(reslist)
+    print(reslist[0], reslist[1], reslist[2])
 
 
     return {"result":reslist}

@@ -85,7 +85,7 @@ export default function App() {
                 <Landing visible={appState != 0} appState={appState} setAppState={setAppState} 
                     scrollToBottom={scrollToBottom} scrollToTop={scrollToTop}/>
                 <Add visible={appState == 2} setAppState={setAppState}/>
-                <Journal visible={appState == 3} setAppState={setAppState} />
+                <Journal visible={appState == 3} setAppState={setAppState} isUserLoggedIn={isUserLoggedIn} />
             </div>
         </div>
     )

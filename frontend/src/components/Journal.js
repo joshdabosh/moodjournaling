@@ -41,12 +41,13 @@ export default function Journal({visible, toggleVisible, setAppState, isUserLogg
                 image: res.result[3]
             })
         }
+        setObjects(temp_objects)
     }
     useEffect(() => {
         if (visible == false && isUserLoggedIn == true) {
             populate_temp_objects(temp_objects)
         }
-    }, [visible])
+    }, [visible, isUserLoggedIn])
     const [objects, setObjects] = useState(temp_objects
         /*
         [
@@ -189,6 +190,7 @@ const Page = forwardRef((props, ref) => {
 
 // console.log(makePages(objects)) 
 function makePages(objects){
+    console.log(objects.length)
     var counter = 1;
     
     const pages = objects.map((object) => {
