@@ -13,17 +13,17 @@ app = Flask(__name__)
 
 session_cookie = SecureCookieSessionInterface().get_signing_serializer(app)
 
-
+# yo I love github
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 app.config['SESSION_COOKIE_SAMESITE'] = "None"
 app.config['SESSION_COOKIE_SECURE'] = True
 Session(app)
 
-conn = psycopg2.connect(database = "eylwyufz",
+conn = psycopg2.connect(database = "tcqofoya",
                         host = "suleiman.db.elephantsql.com",
-                        user = "eylwyufz",
-                        password = "mJj9OEnuJW89gt2BaBdbQhxz4600y2vJ")
+                        user = "tcqofoya",
+                        password = "T7QkgASsBwXgk1KmCx_LRabh66ObnRTE")
 cur = conn.cursor()
 
 ph = PasswordHasher()

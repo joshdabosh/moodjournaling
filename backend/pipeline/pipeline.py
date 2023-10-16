@@ -5,7 +5,7 @@ from PIL import Image
 from stability_sdk import client
 from stability_sdk.client import generation
 
-openai.api_key = "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"
+openai.api_key = "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"
 
 STABILITY_API_KEY = "sk-tFClvqHpTQZSoBs84X6p1mAZDHWoZTekVwjCA51IBB6ZpYoV"
 # STABILITY_API_KEY = "sk-u1Tugp4RvL2i0FenDJbjWXmjY1Ncfi0dDQo2xtjNRwurSFjR"
