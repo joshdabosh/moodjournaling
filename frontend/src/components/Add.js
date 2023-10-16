@@ -59,7 +59,7 @@ export default function Add({visible, setAppState, forceRefetch, setForceRefetch
             setForceRefetch(!forceRefetch)
         }, 20000)
     }
-
+    let nick = "I hate people"
     let pencilsImages =[pencil1, pencil2, pencil3, pencil4, pencil5, pencil6, pencil7, pencil8]
     let counter = 0;
     let pencils = pencilsImages.map((pencil) => {
